@@ -37,13 +37,13 @@ const LoginPage = () => {
       <div className="leftContainer">
         <p className="category">Cloud</p>
 
-        <h1 className="applicationName">Multi-Cloud Management</h1>
+        <h3 className="applicationName">Multi-Cloud Management</h3>
         <br />
         <p>Welcome back! Please login to your account</p>
 
         <div className="loginForm">
           <form action="" className="form" onSubmit={handleSubmit}>
-            <div class="input-group mb-3">
+            <div className="input-group mb-3">
               <input
                 type="text"
                 class="form-control form-control-lg bg-light fs-6"
@@ -51,34 +51,34 @@ const LoginPage = () => {
                 autoFocus
               ></input>
             </div>
-            <div class="input-group mb-1">
+            <div className="input-group mb-1">
               <input
                 type="password"
                 class="form-control form-control-lg bg-light fs-6"
                 placeholder="Password"
               ></input>
             </div>
-            <div class="input-group mb-5 d-flex justify-content-between">
-              <div class="form-check">
+            <div className="input-group mb-5 d-flex justify-content-between">
+              <div className="form-check">
                 <input
                   type="checkbox"
-                  class="form-check-input"
+                  className="form-check-input"
                   id="formCheck"
                 ></input>
-                <label for="formCheck" class="form-check-label text-secondary">
+                <label for="formCheck" className="form-check-label text-secondary">
                   <small>Remember Me</small>
                 </label>
               </div>
-              <div class="forgot">
+              <div className="forgot">
                 <small>
                   <a href="#">Forgot Password?</a>
                 </small>
               </div>
             </div>
-            <div class="input-group mb-3">
+            <div className="input-group mb-3">
               <button
-                class="btn btn-lg btn-primary w-100 fs-6"
-                // onClick={handleSubmit}
+                className="btn btn-lg btn-primary w-100 fs-6"
+                type = "submit"
               >
                 Login
               </button>
@@ -86,7 +86,7 @@ const LoginPage = () => {
             {/* <div class="input-group mb-3">
                     <button class="btn btn-lg btn-light w-100 fs-6"><img src="images/google.png" style="width:20px" class="me-2"><small>Sign In with Google</small></button>
                 </div> */}
-            <div class="row">
+            <div className="row">
               <small>
                 Don't have account? <Link to="/register">Sign Up</Link>
               </small>

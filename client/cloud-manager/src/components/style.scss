@@ -144,6 +144,13 @@
         padding: 0.4rem 0.5rem;
       }
     }
+    .refresh-btn {
+      height: max-content;
+      border: none;
+      background-color: white;
+      padding: 0.2rem 0.2rem;
+      margin-right: 1rem;
+    }
   }
   .projectListTable {
     .status {
@@ -169,6 +176,66 @@
     .close {
       color: #5c5c5c;
       background-color: #bdbdbd;
+    }
+  }
+}
+
+.overlayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 6px;
+
+    input {
+      color: black;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    button {
+      margin: 5px;
+      height: max-content;
+    }
+
+    .error {
+      color: red;
+    }
+    .searchUserChat {
+      border-radius: 7px;
+      padding: 0.2rem 0.5rem;
+      margin: 0.2rem 0.5rem;
+      width: max-content;
+      &:hover {
+        background-color: #f1cfcf;
+        cursor: pointer;
+      }
+    }
+
+    .search {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .searchIcon {
+        scale: 1;
+        width: 27px;
+        height: 27px;
+        margin-right: 0.5rem;
+      }
     }
   }
 }
