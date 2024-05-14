@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.scss";
-import SideBarOption from "./sideBarOption";
+import SideBarOption from "./SideBarOption";
 import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import logout from "../assets/logout.svg";

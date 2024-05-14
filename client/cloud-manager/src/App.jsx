@@ -13,6 +13,7 @@ import SignUpPage from "./pages/SignUpPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./contexts/authContext";
+import ProjectDashboard from "./pages/ProjectDashboard";
 
 function App() {
   const { currentUser } = useAuth();
@@ -43,6 +44,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          exact
+          path="project/:projectId"
+          element={
+            <ProtectedRoute>
+              <ProjectDashboard />
+            </ProtectedRoute>
+          }
+        />
+
         <Route exact path="*" element={<NoPage />} />
         <Route
           exact

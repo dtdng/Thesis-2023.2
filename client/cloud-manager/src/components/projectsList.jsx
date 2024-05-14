@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import addProjectIcon from "../assets/add-project.svg";
+import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import { useAuth } from "../contexts/authContext/index";
 import "./style.scss";
 import axios from "axios";
-import { useAuth } from "../contexts/authContext/index";
+
+import addProjectIcon from "../assets/add-project.svg";
 import CreateProjectForm from "./CreateProjectForm";
 import refreshIcon from "../assets/refresh.svg";
 
@@ -23,7 +25,7 @@ const ProjectsList = () => {
         `http://localhost:3000/project/user/${currentUserData._id}`
       );
       setProjectsList(projectsResponse.data);
-      console.log(projectsList);
+      // console.log(projectsList);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +48,11 @@ const ProjectsList = () => {
           setTrigger={setButtonPopup}
         ></CreateProjectForm>
         <div>
-          <button type="button" onClick={handleRefreshButton} className="refresh-btn">
+          <button
+            type="button"
+            onClick={handleRefreshButton}
+            className="refresh-btn"
+          >
             <img src={refreshIcon} alt="refresh" />
           </button>
           <button type="button" onClick={handleAddProjectButton}>
@@ -68,8 +74,12 @@ const ProjectsList = () => {
           </thead>
           <tbody>
             {projectsList.map((project) => (
-              <tr>
-                <td>{project.projectName}</td>
+              <tr key={project._id}>
+                <td>
+                  <Link to={`/project/${project._id}`}>
+                    {project.projectName}
+                  </Link>
+                </td>
                 <td>{project.projectDescription}</td>
                 <td>{project.numberOfVMs}</td>
                 <td>{project.totalBill} $</td>

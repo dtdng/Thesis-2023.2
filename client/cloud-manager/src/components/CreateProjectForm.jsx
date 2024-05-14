@@ -36,7 +36,7 @@ const CreateProjectForm = (props) => {
   };
 
   const handleSelect = async () => {
-    let addMember = { uid: user._id, email: user.email };
+    let addMember = { uid: user._id, email: user.email, role: "member" };
     // console.log("selectedMembers: ", selectedMembers);
     if (selectedMembers.findIndex((x) => x.uid === addMember.uid) === -1)
       setSelectedMembers([...selectedMembers, addMember]);
@@ -57,7 +57,11 @@ const CreateProjectForm = (props) => {
     if (currentUserData != null) {
       setSelectedMembers([
         ...selectedMembers,
-        { uid: currentUserData._id, email: currentUserData.email },
+        {
+          uid: currentUserData._id,
+          email: currentUserData.email,
+          role: "admin",
+        },
       ]);
     }
   }, []);

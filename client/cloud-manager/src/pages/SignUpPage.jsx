@@ -10,7 +10,8 @@ import axios, { isCancel, AxiosError } from "axios";
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [loading, setLoading] = useState(true);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
