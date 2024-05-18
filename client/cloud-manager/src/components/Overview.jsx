@@ -4,10 +4,13 @@ import TimePicker from "./TimePicker";
 import "./style.scss";
 import addIcon from "../assets/add.svg";
 import cancelIcon from "../assets/cancel.svg";
+import GraphCPU from "./graph/GraphCPU";
+import GraphMemory from "./graph/GraphMemory";
+
 const Overview = (project) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [processData, setProcessData] = useState(null);
+
   const clusterList = [
     {
       clusterID: "cluster1",
@@ -38,31 +41,30 @@ const Overview = (project) => {
       zone: "us-west-1a",
     },
   ];
+  const clusterData = {
+    google: {
+      active: 0,
+      inactive: 0,
+    },
+    aws: {
+      active: 0,
+      inactive: 0,
+    },
+  };
+  const regionData = {
+    "us-central1": {
+      active: 0,
+      inactive: 0,
+    },
+    "us-west-1": {
+      active: 0,
+      inactive: 0,
+    },
+    // Add more regions as needed
+  };
+  const [processData, setProcessData] = useState({ clusterData, regionData });
 
   const processingData = (clusterList) => {
-    const clusterData = {
-      google: {
-        active: 0,
-        inactive: 0,
-      },
-      aws: {
-        active: 0,
-        inactive: 0,
-      },
-    };
-
-    const regionData = {
-      "us-central1": {
-        active: 0,
-        inactive: 0,
-      },
-      "us-west-1": {
-        active: 0,
-        inactive: 0,
-      },
-      // Add more regions as needed
-    };
-
     clusterList.forEach((cluster) => {
       if (cluster.provider === "Google") {
         clusterData.google[cluster.status]++;
@@ -100,7 +102,7 @@ const Overview = (project) => {
                 processData.clusterData.google.active +
                   processData.clusterData.google.inactive}
             </div>
-            {processData.clusterData.google.inactive > 0 && (
+            {processData && processData.clusterData.google.inactive > 0 && (
               <div className="numberClusterNotWorking">
                 {" "}
                 <img src={cancelIcon} alt="" />
@@ -137,7 +139,12 @@ const Overview = (project) => {
       </div>
       <div className="overviewCluster"></div>
       <div className="clusterStatus"></div>
-      <div className="graphList"></div>
+      <div className="graphList">
+        <p>CPU</p>
+        <GraphCPU />
+        <p>Memory</p>
+        <GraphMemory />
+      </div>
     </div>
   );
 };

@@ -35,6 +35,7 @@ function App() {
     <BrowserRouter>
       <ToastContainer />
       <Routes>
+        <Route exact path="/graph" element={<Graph />} />
         <Route
           exact
           path="/"

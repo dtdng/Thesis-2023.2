@@ -7,6 +7,8 @@ dotenv.config({ path: "./.env" });
 
 const accountRoute = require("./routes/accountRoute.js");
 const projectRoute = require("./routes/projectRoute.js");
+const ClusterInformationRoute = require("./routes/clusterInformationRoute.js");
+const instanceInformationRoute = require("./routes/instanceInformationRoute.js");
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +21,8 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(accountRoute);
 app.use(projectRoute);
+app.use(ClusterInformationRoute);
+app.use(instanceInformationRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);

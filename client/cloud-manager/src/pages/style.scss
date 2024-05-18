@@ -51,8 +51,10 @@
 }
 
 .homePage {
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  height: max-content;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
