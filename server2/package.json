@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js"
@@ -11,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/bigquery": "^7.7.0",
+    "@google-cloud/compute": "^4.6.0",
     "@google-cloud/monitoring": "^4.0.0",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
