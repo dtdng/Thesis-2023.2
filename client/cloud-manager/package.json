@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google-cloud/compute": "^4.6.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "dot-env": "^0.0.1",

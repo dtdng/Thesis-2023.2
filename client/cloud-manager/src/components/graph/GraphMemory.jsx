@@ -40,7 +40,6 @@ const GraphMemory = (idCluster) => {
   const [processedData, setProcessedData] = useState([]);
   const [numberOfVMS, setNumberOfVMS] = useState(0);
 
-  
   const authenticate = () => {
     return gapi.auth2.getAuthInstance().signIn({
       scope:
@@ -116,7 +115,7 @@ const GraphMemory = (idCluster) => {
         }
         setData(newData); // Update state once with the collected data
         setClusterInfo(newClusterInfo);
-
+        setCheckLoad(true);
         // console.log("Data", data);
         // console.log("Cluster Info", clusterInfo);
       },
@@ -207,6 +206,10 @@ const GraphMemory = (idCluster) => {
   //     execute();
   //   }, 60000);
   // });
+
+  if (checkLoad == false) {
+    return <div className="loading">Loading Memory Data....</div>;
+  }
 
   return (
     <div>

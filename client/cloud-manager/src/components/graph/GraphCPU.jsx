@@ -120,7 +120,7 @@ const GraphCPU = (idCluster) => {
         // Update state once with the collected data
         setData(newData);
         setClusterInfo(newClusterInfo);
-
+        setCheckLoad(true);
         // console.log("Data", newData);
         // console.log("Cluster Info", newClusterInfo);
       },
@@ -216,6 +216,9 @@ const GraphCPU = (idCluster) => {
   //   }, 60000);
   // });
 
+  if (checkLoad == false) {
+    return <div className = "loading">Loading CPU Data....</div>;
+  }
   return (
     <div>
       <AreaChart width={400} height={200} data={processedData}>

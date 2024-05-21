@@ -6,10 +6,12 @@ import addIcon from "../assets/add.svg";
 import cancelIcon from "../assets/cancel.svg";
 import GraphCPU from "./graph/GraphCPU";
 import GraphMemory from "./graph/GraphMemory";
+import AddClusterInfo from "./AddClusterInfo";
 
 const Overview = (project) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [buttonPopup, setButtonPopup] = useState(false);
 
   const clusterList = [
     {
@@ -88,10 +90,15 @@ const Overview = (project) => {
     setProcessData({ clusterData, regionData });
   }, []);
 
+  const handleOpenForm = () => {
+    setButtonPopup(true);
+  };
+
   return (
     <div className="subPage">
       {" "}
       <TimePicker />
+      <AddClusterInfo trigger={buttonPopup} setTrigger={setButtonPopup} />
       {/* //TODO : Create the add cluster form */}
       <div className="listProvider">
         <div className="provider">
@@ -132,7 +139,7 @@ const Overview = (project) => {
           <div className="subtitle">Cluster</div>
         </div>
         <div className="AddCluster">
-          <button type="button">
+          <button type="button" onClick={handleOpenForm} className="addClusterBtn">
             <img src={addIcon} alt="" />
           </button>
         </div>

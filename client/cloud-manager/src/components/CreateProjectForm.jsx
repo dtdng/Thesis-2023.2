@@ -172,7 +172,7 @@ const CreateProjectForm = (props) => {
             className="btn btn-outline-secondary btn-lg fs-6"
             onClick={() => props.setTrigger(false)}
           >
-            cancel
+            Cancel
           </button>
           <button type="submit" className="btn btn-success">
             Create

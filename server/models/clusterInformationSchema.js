@@ -6,6 +6,10 @@ const clusterInformation = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  clusterID: {
+    type: String,
+    required: true,
+  },
   region: {
     type: String,
     required: true,
@@ -14,12 +18,12 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: true,
   },
-  provider: {
+  cloudProjectID: {
     type: String,
     required: true,
   },
-  zone: {
-    type: Array,
+  provider: {
+    type: String,
     required: true,
   },
   status: {

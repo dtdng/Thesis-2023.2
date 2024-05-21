@@ -14,6 +14,7 @@ const ProjectsList = () => {
   const { currentUserData } = useAuth();
   const [projectsList, setProjectsList] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleAddProjectButton = async () => {
     setButtonPopup(true);
@@ -21,11 +22,13 @@ const ProjectsList = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(false);
       const projectsResponse = await axios.get(
         `http://localhost:3000/project/user/${currentUserData._id}`
       );
       setProjectsList(projectsResponse.data);
       // console.log(projectsList);
+      setLoading(true);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +75,11 @@ const ProjectsList = () => {
               <th>Status</th>
             </tr>
           </thead>
+
           <tbody>
+            {loading == false && (
+              <div className="loading">Loading List Project Data....</div>
+            )}
             {projectsList.map((project) => (
               <tr key={project._id}>
                 <td>
