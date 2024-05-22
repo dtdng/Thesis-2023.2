@@ -1,72 +1,122 @@
-import React from "react";
+import React, { useState, CSSProperties } from "react";
 
 import "./style.scss";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import closeIcon from "../assets/black-cancel.svg";
+import axios from "axios";
+import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const AddClusterInfo = (props) => {
   const { projectId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [cloudProjectID, setCloudProjectID] = useState("");
+  const [provider, setProvider] = useState("Google");
+  const [loadingAddData, setLoadingAddData] = useState(false);
+  const [data, setData] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const clusterName = e.target.clusterName.value;
-    const clusterID = e.target.clusterID.value;
-    const cloudProjectID = e.target.cloudProjectID.value;
-    const region = e.target.region.value;
-    const provider = e.target.provider.value;
-    const type = e.target.type.value;
-    const apiKey = e.target.apiKey.value;
-    if (!clusterName || !clusterID || !cloudProjectID || !region || !provider) {
-      toast.error("Please fill all the fields");
+  const handleCheck = async () => {
+    const provider = document.getElementById("provider").value.toLowerCase();
+    const cloudProjectID = document
+      .getElementById("cloudProjectID")
+      .value.toLowerCase();
+    setCloudProjectID(cloudProjectID);
+    setProvider(provider);
+    if (cloudProjectID == "") {
+      toast.error("Please enter the cloud project ID");
       return;
     }
 
-    const data = {
-      name: clusterName,
-      clusterID,
-      region: region,
-      projectID: projectId,
-      cloudProjectID: cloudProjectID,
-      provider,
-      status: "Running",
-      type: type,
-      VITE_GOOGLE_API_KEY: apiKey,
-    };
+    try {
+      setData([]);
+      setLoading(true);
+      const res = await axios.get(
+        `http://localhost:3000/cloudProject/${cloudProjectID}/${provider}`
+      );
 
-    console.log(data);
+      if (res.status !== 200) {
+        toast.error(res.message);
+      } else {
+        console.log("res.data", res.data);
+        setData(res.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (data.length == 0) {
+      toast.error("Please check the cloud project first");
+      return;
+    }
+    try {
+      setLoadingAddData(true);
+      var count = 0;
+      // Create an array of promises for all the axios post requests
+      const promises = data.map((obj) => {
+        if (obj.existed) {
+          return;
+        }
+        const instance = {
+          name: obj.name,
+          id: obj.id,
+          region: obj.zone,
+          projectId: projectId,
+          cloudProjectID: cloudProjectID,
+          provider: provider,
+          status: obj.status,
+          type: obj.type,
+          selfLink: obj.selfLink,
+        };
+
+        console.log("instance", instance);
+        count++;
+        // Return the axios post promise
+        return axios.post("http://localhost:3000/cluster", instance);
+      });
+
+      // Wait for all promises to complete
+      await Promise.all(promises);
+
+      // If all requests are successful, show success message
+      toast.success(`${count} clusters added successfully`);
+      setLoadingAddData(false);
+      props.setTrigger(false);
+      setData([]);
+    } catch (error) {
+      console.error("Error adding clusters", error);
+      toast.error("Error adding clusters");
+      setLoadingAddData(false);
+    }
   };
 
   return props.trigger ? (
     <div className="overlayer">
       <form onSubmit={handleSubmit} className="">
-        <div className="row g-3">
-          <div className="mb-3 col">
-            <label for="clusterName" class="form-label">
-              Cluster Name
-            </label>
-            <input
-              autoFocus
-              type="text"
-              className="form-control"
-              id="clusterName"
-              placeholder="cluster-12-abc"
-            />
-          </div>
-          <div className="mb-3 col">
-            <label for="clusterID" class="form-label">
-              Cluster ID
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="clusterID"
-              placeholder="02345..."
-            />
-          </div>
+        <div className="form-header">
+          <p>Cloud Project Information</p>
+          <button
+            type="button"
+            className="closeFormBtn"
+            onClick={() => {
+              props.setTrigger(false);
+              setData([]);
+            }}
+          >
+            <img src={closeIcon} className="" alt="" srcset="" />
+          </button>
         </div>
 
         <div className="row g-3">
-          <div className="col-md-12">
+          <div className="col-md-7">
             <label for="cloudProjectID" class="form-label">
               Cloud Project ID
             </label>
@@ -77,36 +127,6 @@ const AddClusterInfo = (props) => {
               placeholder="project-1234"
             />
           </div>
-          <div className="col-md-12">
-            <label for="apiKey" class="form-label">
-              API KEY
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="apiKey"
-              placeholder="api-key-123"
-            />
-          </div>
-        </div>
-
-        <div className="row g-3">
-          <div className="col">
-            <label for="region" class="form-label">
-              Region
-            </label>
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              id="region"
-            >
-              <option selected value="us-west4-b">
-                us-west4-b
-              </option>
-              <option value="us-west5-b">us-west5-b</option>
-            </select>
-          </div>
-
           <div className="col">
             <label for="provider" class="form-label">
               Provider
@@ -125,31 +145,68 @@ const AddClusterInfo = (props) => {
               </option>
             </select>
           </div>
+        </div>
 
-          <div className="col ">
-            <label for="type" class="form-label">
-              Type
-            </label>
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              id="type"
-            >
-              <option selected>Instance</option>
-              <option value="Cluster">Cluster</option>
-            </select>
-          </div>
+        <div>
+          <Table className="mt-4" hover size="sm">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Zone</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Added</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading == true && (
+                <div className="loading">Loading Instance Data....</div>
+              )}
+              {data.map((obj) => (
+                <tr key={obj.id}>
+                  <td>
+                    <Link to={obj.selfLink}>{obj.name}</Link>
+                  </td>
+                  <td>{obj.zone}</td>
+                  <td>{obj.status}</td>
+                  <td>{obj.type}</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      readOnly
+                      aria-label="obj existed"
+                      checked={obj.existed}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
 
         <div>
           <button
-            className="btn btn-outline-secondary btn-lg fs-6"
-            onClick={() => props.setTrigger(false)}
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleCheck}
           >
-            Cancel
+            {loading == false && "Check"}
+            <ClipLoader
+              loading={loading}
+              size={15}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </button>
-          <button type="submit" className="btn btn-success">
-            Create
+
+          <button type="submit" className="btn btn-primary">
+            {loadingAddData == false && "Add This Cloud Project"}
+            <ClipLoader
+              loading={loadingAddData}
+              size={15}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </button>
         </div>
       </form>

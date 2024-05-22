@@ -6,7 +6,7 @@ const clusterInformation = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  clusterID: {
+  id: {
     type: String,
     required: true,
   },
@@ -14,7 +14,7 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: true,
   },
-  projectID: {
+  projectId: {
     type: String,
     required: true,
   },
@@ -30,13 +30,13 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: true,
   },
-  VITE_GOOGLE_CLIENT_ID: {
+  type: {
     type: String,
-    required: false,
+    required: true,
   },
-  VITE_GOOGLE_API_KEY: {
+  selfLink: {
     type: String,
-    required: false,
+    required: true,
   },
 });
 

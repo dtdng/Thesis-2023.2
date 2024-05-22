@@ -3,11 +3,13 @@ const ClusterInformation = require("../models/clusterInformationSchema");
 const app = express();
 
 app.post("/cluster", async (request, response) => {
+  console.log("request.body", request.body);
   const cluster = new ClusterInformation(request.body);
   try {
     await cluster.save();
     response.send(cluster);
   } catch (error) {
+    console.log("error", error);
     response.status(500).send(error);
   }
 });

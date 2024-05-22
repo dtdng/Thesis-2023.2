@@ -3,6 +3,16 @@ const app = express();
 const compute = require("@google-cloud/compute");
 const monitoring = require("@google-cloud/monitoring");
 const { ClusterManagerClient } = require("@google-cloud/container").v1;
+const ClusterInformation = require("../models/clusterInformationSchema");
+
+function extractZoneInfo(url) {
+  // Use URL object for easy parsing
+  const urlObj = new URL(url);
+  // Split path removing leading "/"
+  const pathParts = urlObj.pathname.split("/").slice(5);
+  // Zone information is the second element (index 1)
+  return pathParts[1];
+}
 // List all instances in the specified project.
 async function listAllGoogleCloudProjectInstances(project_id) {
   const instancesClient = new compute.InstancesClient();
@@ -22,10 +32,11 @@ async function listAllGoogleCloudProjectInstances(project_id) {
           const object = {
             name: instance.name,
             id: instance.id,
-            zone: instance.zone,
+            zone: extractZoneInfo(instance.zone),
             status: instance.status,
             selfLink: instance.selfLink,
             type: instance.kind,
+            existed: false,
           };
           instancesList.push(object);
         }
@@ -58,6 +69,7 @@ async function listAllGoogleCloudProjectCluster(project_id) {
         status: data[i].status,
         selfLink: data[i].selfLink,
         type: "k8s_cluster",
+        existed: false,
       };
       clustersList.push(object);
     }
@@ -66,6 +78,20 @@ async function listAllGoogleCloudProjectCluster(project_id) {
     return null;
   }
   return clustersList;
+}
+
+async function checkClusterExistence(result) {
+  for (const element of result) {
+    try {
+      const check = await ClusterInformation.findOne({ name: element.name });
+      // console.log("Check:", check);
+      element.existed = !!check;
+    } catch (error) {
+      console.error("Error checking cluster existence:", error);
+      element.existed = false; // Default to false if there's an error
+    }
+  }
+  return result;
 }
 
 app.get("/cloudProject/:id/:provider", async (request, response) => {
@@ -79,13 +105,16 @@ app.get("/cloudProject/:id/:provider", async (request, response) => {
       const clusters =
         (await listAllGoogleCloudProjectCluster(projectID)) || [];
       const result = [...instances, ...clusters];
-      console.log("Result:", result);
 
-      if (result.length > 0) {
-        response.status(200).send(result);
-      } else {
-        response.status(404).send("No instances or clusters found");
-      }
+      checkClusterExistence(result).then((updatedResult) => {
+        console.log("Updated Result:", updatedResult);
+        if (updatedResult.length > 0) {
+          response.status(200).send(updatedResult);
+        } else {
+          response.status(404).send("No instances or clusters found");
+        }
+        // Do something with the updated result
+      });
     } catch (error) {
       console.error("Error:", error);
       response.status(500).send("Internal server error");

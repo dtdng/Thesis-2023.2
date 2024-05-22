@@ -220,6 +220,31 @@
       margin: 5px;
       height: max-content;
     }
+    .form-header {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
+      .closeFormBtn {
+        position: relative;
+        top: -1rem;
+        margin: 0;
+        scale: 1.6;
+        background-color: transparent;
+        border: none;
+        border-radius: 50%;
+        padding: 0;
+        transition: transform 0.2s;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
 
     .error {
       color: red;
