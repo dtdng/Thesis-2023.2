@@ -24,6 +24,16 @@ app.get("/clusters", async (request, response) => {
   }
 });
 
+app.get("/clusters/:projectId", async (request, response) => {
+  const projectId = request.params.projectId;
+  const clusters = await ClusterInformation.find({ projectId: projectId });
+  try {
+    response.send(clusters);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 app.get("/cluster/:id", async (request, response) => {
   const cluster = await ClusterInformation.findById(request.params.id);
 

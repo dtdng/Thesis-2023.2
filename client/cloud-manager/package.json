@@ -19,7 +19,9 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
+    "react-simple-maps": "^3.0.0",
     "react-spinners": "^0.13.8",
+    "react-svg-worldmap": "^2.0.0-alpha.16",
     "react-toastify": "^10.0.5",
     "recharts": "^2.12.7"
   },

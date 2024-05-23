@@ -6,6 +6,8 @@ import TopPage from "../components/TopPage";
 import SideBarProjectDashboard from "../components/SideBarProjectDashboard";
 import axios from "axios";
 import Overview from "../components/Overview";
+import { ClipLoader } from "react-spinners";
+
 const ProjectDashboard = () => {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
@@ -32,7 +34,14 @@ const ProjectDashboard = () => {
   }, [projectId]);
 
   if (loading) {
-    return <div>Loading...</div>; // Render loading indicator
+    return (
+      <ClipLoader
+        loading={loading}
+        size={50}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+    );
   }
 
   if (error) {
