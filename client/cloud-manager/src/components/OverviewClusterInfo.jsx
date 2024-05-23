@@ -34,7 +34,7 @@ const OverviewClusterInfo = (processedData) => {
 
   useEffect(() => {
     setData(processedData.processedData);
-    console.log("processedData", processedData);
+    // console.log("processedData", processedData);
   }, [processedData]);
 
   const handleOpenForm = () => {
@@ -58,7 +58,7 @@ const OverviewClusterInfo = (processedData) => {
               </div>
             ) : null}
           </div>
-          <div className="subtitle">Cluster</div>
+          <div className="subtitle">Instance</div>
         </div>
         <div className="provider">
           <div className="providerName">AWS</div>
@@ -74,7 +74,7 @@ const OverviewClusterInfo = (processedData) => {
               </div>
             ) : null}
           </div>
-          <div className="subtitle">Cluster</div>
+          <div className="subtitle">Instance</div>
         </div>
         <div className="AddCluster">
           <button
@@ -90,7 +90,7 @@ const OverviewClusterInfo = (processedData) => {
       <div className="clusterOverview">
         <div className="numberOfClusters data">
           <h5>{data.type.cluster}</h5>
-          <p className="data_name">Clusters</p>
+          <p className="data_name">K8s Clusters</p>
         </div>
         <div className="numberOfVMs data">
           <h5>{data.type.VM}</h5>

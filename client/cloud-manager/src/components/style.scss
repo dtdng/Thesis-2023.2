@@ -382,11 +382,29 @@
     height: 100%;
   }
 
-  .map {
-    height: max-content;
-    width: 60%;
-    padding: 1.5rem 3rem;
-    background-color: transparent;
+  .visualizeMapStatus {
+    justify-content: space-around;
+    .map {
+      height: max-content;
+      width: 55%;
+      padding: 1.5rem 3rem;
+      background-color: transparent;
+    }
+    .statusChart {
+      width: 40%;
+      padding: 1rem;
+      background-color: white;
+      border: 1px solid #cec5c5;
+      border-radius: 5px;
+      max-width: 350px;
+      .chartHeader {
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
+      p {
+        font-size: 0.85rem;
+      }
+    }
   }
 }
 

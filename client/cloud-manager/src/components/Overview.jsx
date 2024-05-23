@@ -10,6 +10,7 @@ import { ClipLoader } from "react-spinners";
 
 import { useParams } from "react-router-dom";
 import MapChart from "./graph/MapChart";
+import ClusterStatusChar from "./graph/ClusterStatusChar";
 
 const Overview = (project) => {
   const { projectId } = useParams();
@@ -42,22 +43,29 @@ const Overview = (project) => {
   const [data, setData] = useState(templateData);
   const [rawData, setRawData] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `http://localhost:3000/clusters/${projectId}`
+      );
+      setRawData(response.data);
+      setLoading(false);
+      // console.log("response.data", response.data);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `http://localhost:3000/clusters/${projectId}`
-        );
-        setRawData(response.data);
-        setLoading(false);
-        // console.log("response.data", response.data);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
+
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      fetchData();
+    }, 300000);
   }, []);
 
   useEffect(() => {
@@ -128,8 +136,18 @@ const Overview = (project) => {
       {" "}
       <TimePicker />
       <OverviewClusterInfo processedData={data} />
-      <div className="row-direction ">
-        <div>HIHI</div>
+      <div className="row-direction visualizeMapStatus">
+        <div className="statusChart">
+          <p className="chartHeader">Instance Status</p>
+          <div className="">
+            <ClusterStatusChar processedData={data} />
+          </div>
+          <p>
+            {data.cluster.working} Working - {data.cluster.notWorking} Not
+            Working
+          </p>
+        </div>
+
         <div className="map">
           <MapChart processedData={data} />
           {/* <p>CPU</p>

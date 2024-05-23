@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import WorldMap from "react-svg-worldmap";
 
 const processedCountryData = (rawData) => {
-  console.log("rawData", rawData);
   const countryData = Object.keys(rawData).map((country) => ({
     country: country,
     value: rawData[country],
@@ -41,7 +40,6 @@ export default function MapChart(processedData) {
 
   useEffect(() => {
     setData(processedData.processedData);
-    console.log("processedData", processedData);
   }, [processedData]);
 
   useEffect(() => {
@@ -52,9 +50,10 @@ export default function MapChart(processedData) {
   return (
     <WorldMap
       color="red"
-      // title="Cluster Distribution"
+      title="Instance Distribution"
       value-suffix="clusters"
       size="responsive"
+      strokeOpacity={0.6}
       data={countryData}
       backgroundColor="transparent"
     />
