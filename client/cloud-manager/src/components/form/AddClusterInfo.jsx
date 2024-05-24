@@ -1,9 +1,9 @@
 import React, { useState, CSSProperties } from "react";
 
-import "./style.scss";
+import "../style.scss";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import closeIcon from "../assets/black-cancel.svg";
+import closeIcon from "../../assets/black-cancel.svg";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";

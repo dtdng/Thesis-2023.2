@@ -1,6 +1,6 @@
 const monitoring = require("@google-cloud/monitoring");
 
-function getClusterInformationInProject(project_id) {
+const getClusterInformationInProject = function (project_id) {
   const parent = `projects/${project_id}/locations/-`;
 
   // Imports the Container library
@@ -30,9 +30,9 @@ function getClusterInformationInProject(project_id) {
   }
 
   callListClusters();
-}
+};
 
-async function getClusterCPUMetricList(project_id, cluster_id) {
+const getClusterCPUMetricList = async function (project_id, cluster_id) {
   // Creates a client
   const monitoringClient = new monitoring.MetricServiceClient();
 
@@ -77,10 +77,15 @@ async function getClusterCPUMetricList(project_id, cluster_id) {
   } catch (err) {
     console.error("Error fetching time series data:", err);
   }
-}
+};
 
-async function getClusterMemoryMetricList(project_id, cluster_id) {}
+const getClusterMemoryMetricList = async function (project_id, cluster_id) {};
 
-getClusterInformationInProject("bustling-dynamo-420507");
-// getClusterCPUMetricList("bustling-dynamo-420507", 0);
+// getClusterInformationInProject("bustling-dynamo-420507");
+getClusterCPUMetricList("bustling-dynamo-420507", 0);
 
+module.exports = {
+  getClusterInformationInProject,
+  getClusterCPUMetricList,
+  getClusterMemoryMetricList,
+};

@@ -14,7 +14,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./contexts/authContext";
 import ProjectDashboard from "./pages/ProjectDashboard";
-
+import InstanceDashboard from "./pages/InstanceDashboard";
 function App() {
   const { currentUser } = useAuth();
   const ProtectedRoute = ({ children }) => {
@@ -42,6 +42,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="instance/:instanceId"
+          element={
+            <ProtectedRoute>
+              <InstanceDashboard />
             </ProtectedRoute>
           }
         />

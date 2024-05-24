@@ -4,7 +4,7 @@ import SideBarOption from "./SideBarOption";
 
 import "./style.scss";
 
-const SideBarProjectDashboard = ({ project }) => {
+const SideBarProjectDashboard = ({ project, setMenuChoose }) => {
   return (
     <div className="SideBar">
       <div>
@@ -13,9 +13,10 @@ const SideBarProjectDashboard = ({ project }) => {
             <p>{project.projectName}</p>
           </div>
         )}
-        <SideBarOption text="Overview" />
-        <SideBarOption text="Billing" />
-        <SideBarOption text="Setting" />
+        <SideBarOption text="Overview" setMenuChoose={setMenuChoose}/>
+        <SideBarOption text="Instances" setMenuChoose={setMenuChoose}/>
+        <SideBarOption text="Billing" setMenuChoose={setMenuChoose}/>
+        <SideBarOption text="Setting" setMenuChoose={setMenuChoose}/>
       </div>
     </div>
   );

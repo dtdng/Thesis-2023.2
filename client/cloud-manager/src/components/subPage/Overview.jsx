@@ -1,16 +1,16 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import TimePicker from "./TimePicker";
-import "./style.scss";
-import GraphCPU from "./graph/GraphCPU";
-import GraphMemory from "./graph/GraphMemory";
-import OverviewClusterInfo from "./OverviewClusterInfo";
+import TimePicker from "../TimePicker";
+import "../style.scss";
+import GraphCPU from "../graph/GraphCPU";
+import GraphMemory from "../graph/GraphMemory";
+import OverviewClusterInfo from "../OverviewClusterInfo";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 
 import { useParams } from "react-router-dom";
-import MapChart from "./graph/MapChart";
-import ClusterStatusChar from "./graph/ClusterStatusChar";
+import MapChart from "../graph/MapChart";
+import ClusterStatusChar from "../graph/ClusterStatusChar";
 
 const Overview = (project) => {
   const { projectId } = useParams();

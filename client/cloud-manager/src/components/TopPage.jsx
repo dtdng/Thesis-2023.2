@@ -7,6 +7,7 @@ import notiIcon from "../assets/noti_icon.png";
 import nonNotiIcon from "../assets/non_noti_icon.png";
 import { useAuth } from "../contexts/authContext/index";
 import "./style.scss";
+import { Link } from "react-router-dom";
 const TopPage = () => {
   const [notification, setNotification] = useState(true);
   // const { currentUser } = useAuth();
@@ -22,7 +23,9 @@ const TopPage = () => {
   };
   return (
     <div className="topPage">
+      <Link to="/">
       <img src={logo} alt="logo" />
+      </Link>
       <div className="searchBar">
         <img src={searchIcon} alt="search" />
         <input type="text" placeholder="Search..." />

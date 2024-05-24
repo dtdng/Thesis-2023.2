@@ -7,11 +7,11 @@ const ClusterStatusChar = (processedData) => {
     { x: "Not Working", y: 1 },
   ];
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(sampleData);
 
-  useEffect(() => {
-    setData(sampleData);
-  }, []);
+  // useEffect(() => {
+  //   setData(sampleData);
+  // }, []);
 
   useEffect(() => {
     console.log("processedData", processedData);
@@ -23,6 +23,10 @@ const ClusterStatusChar = (processedData) => {
       { x: "Not Working", y: raw.notWorking },
     ]);
   }, [processedData]);
+
+  if (data[0].y == 0 && data[1].y == 0) {
+    return <p>No Data to display</p>;
+  }
 
   return (
     <VictoryPie

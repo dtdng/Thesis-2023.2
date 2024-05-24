@@ -90,6 +90,14 @@
     border-bottom: #5c5c5c solid 1px;
   }
 
+  .instanceName {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.25rem 0.75rem 0.15rem 0.75rem;
+    border-bottom: #5c5c5c solid 1px;
+  }
+
   button {
     border: none;
     background-color: white;
@@ -122,6 +130,7 @@
   }
   &:hover {
     background-color: #dbd1d1;
+    cursor: pointer;
   }
 }
 
@@ -426,4 +435,41 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.instanceInfomation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 2rem;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #cec5c5;
+  max-height: 400px;
+  flex-wrap: wrap;
+  width: max-content;
+  .instanceInfomationTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    svg {
+      margin-right: 0.5rem;
+    }
+  }
+  .instanceInfomationContent {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 1.5rem 2.5rem;
+    .info {
+      .infoTitle {
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      .infoContent {
+        font-weight: 400;
+        font-size: 0.9rem;
+      }
+    }
+  }
 }

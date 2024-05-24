@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import addIcon from "../assets/add.svg";
 import cancelIcon from "../assets/cancel.svg";
-import AddClusterInfo from "./AddClusterInfo";
+import AddClusterInfo from "./form/AddClusterInfo";
 import "./style.scss";
 
 const OverviewClusterInfo = (processedData) => {

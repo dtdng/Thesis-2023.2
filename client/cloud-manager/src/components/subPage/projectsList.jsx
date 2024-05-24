@@ -2,13 +2,13 @@ import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
-import { useAuth } from "../contexts/authContext/index";
-import "./style.scss";
+import { useAuth } from "../../contexts/authContext/index";
+import "../style.scss";
 import axios from "axios";
 
-import addProjectIcon from "../assets/add-project.svg";
-import CreateProjectForm from "./CreateProjectForm";
-import refreshIcon from "../assets/refresh.svg";
+import addProjectIcon from "../../assets/add-project.svg";
+import refreshIcon from "../../assets/refresh.svg";
+import CreateProjectForm from "../form/CreateProjectForm";
 
 const ProjectsList = () => {
   const { currentUserData } = useAuth();

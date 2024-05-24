@@ -44,10 +44,24 @@ app.get("/cluster/:id", async (request, response) => {
   }
 });
 
-app.patch("/cluster/:id", async (request, response) => {
+// app.put("/cluster/:id", async (request, response) => {
+//   console.log("request.body", request.body);
+//   try {
+//     await ClusterInformation.findByIdAndUpdate(request.params.id, request.body);
+//     await ClusterInformation.save();
+//   } catch (error) {
+//     response.status(500).send(error);
+//   }
+// });
+
+app.put("/cluster/:id", async (request, response) => {
   try {
-    await ClusterInformation.findByIdAndUpdate(request.params.id, request.body);
-    await ClusterInformation.save();
+    const cluster = await ClusterInformation.findByIdAndUpdate(
+      request.params.id,
+      request.body
+    );
+    await cluster.save();
+    response.send(cluster);
   } catch (error) {
     response.status(500).send(error);
   }

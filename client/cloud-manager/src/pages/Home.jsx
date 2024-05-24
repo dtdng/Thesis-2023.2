@@ -2,9 +2,9 @@ import React from "react";
 import { useState, useEffect, useContext } from "react";
 import TopPage from "../components/TopPage";
 import SideBar from "../components/SideBar";
-import ProjectsList from "../components/projectsList";
-import Profile from "../components/Profile";
-import Setting from "../components/Setting";
+import ProjectsList from "../components/subPage/projectsList";
+import Profile from "../components/subPage/Profile";
+import Setting from "../components/subPage/Setting";
 import "./style.scss";
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
     <div className="homePage">
       <TopPage />
       <div className="midPage">
-        <SideBar />
+        <SideBar setMenuChoose={setMenuChoose}/>
         <div className="midPageContent">
           {menuChoose == "Dashboard" && <ProjectsList />}
           {menuChoose == "Profile" && <Profile />}

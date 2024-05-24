@@ -5,8 +5,9 @@ import "./style.scss";
 import TopPage from "../components/TopPage";
 import SideBarProjectDashboard from "../components/SideBarProjectDashboard";
 import axios from "axios";
-import Overview from "../components/Overview";
+import Overview from "../components/subPage/Overview";
 import { ClipLoader } from "react-spinners";
+import ListInstances from "../components/subPage/ListInstances";
 
 const ProjectDashboard = () => {
   const { projectId } = useParams();
@@ -52,9 +53,13 @@ const ProjectDashboard = () => {
     <div className="homePage">
       <TopPage />
       <div className="midPage">
-        <SideBarProjectDashboard project={project} />
+        <SideBarProjectDashboard
+          project={project}
+          setMenuChoose={setMenuChoose}
+        />
         <div className="midPageContent">
           {menuChoose == "Overview" && <Overview project={project} />}
+          {menuChoose == "Instances" && <ListInstances project={project} />}
         </div>
       </div>
     </div>

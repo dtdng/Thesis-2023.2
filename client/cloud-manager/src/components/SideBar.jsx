@@ -5,13 +5,13 @@ import { auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import logout from "../assets/logout.svg";
 
-const SideBar = () => {
+const SideBar = ({ setMenuChoose }) => {
   return (
     <div className="SideBar">
-      <SideBarOption text="Dashboard" />
+      <SideBarOption text="Dashboard" setMenuChoose={setMenuChoose} />
       <div>
-        <SideBarOption text="Profile" />
-        <SideBarOption text="Setting" />
+        <SideBarOption text="Profile" setMenuChoose={setMenuChoose} />
+        <SideBarOption text="Setting" setMenuChoose={setMenuChoose} />
         <button
           onClick={() => {
             signOut(auth);
