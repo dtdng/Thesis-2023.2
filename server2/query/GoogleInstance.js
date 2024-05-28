@@ -89,7 +89,7 @@ async function getInstanceCPUMetricList(cloudProjectId, instance_id) {
     };
   }
   var result = {
-    metric_type: "compute.googleapis.com/instance/cpu/utilization",
+    metric_type: "cpu_utilization",
     id: 0,
     time: 0,
     value: 0,
@@ -98,23 +98,12 @@ async function getInstanceCPUMetricList(cloudProjectId, instance_id) {
     // Writes time series data
     const [timeSeries] = await monitoringClient.listTimeSeries(request);
 
-    // console.log("CPU utilization:");
     timeSeries.forEach((data) => {
       if (data.metric.labels.instance_name != null) {
         result.id = data.metric.labels.instance_name;
         result.time = data.points[0].interval.endTime.seconds;
         result.value = Math.round(data.points[0].value.doubleValue * 100);
       }
-
-      // console.log(`Instance: ${data.metric.labels.instance_name}`);
-      // data.points.forEach((point, index) => {
-      //   // const timeAgo = Math.round(
-      //   //   (Date.now() / 1000 - point.interval.endTime.seconds) / 60
-      //   // );
-      //   // console.log(
-      //   //   `  ${timeAgo} min ago: ${Math.round(point.value.doubleValue * 100)}%`
-      //   // );
-      // });
     });
   } catch (err) {
     console.error("Error fetching time series data:", err);
@@ -161,7 +150,7 @@ async function getInstanceMemoryMetricList(cloudProjectId, instance_id) {
   }
 
   var result = {
-    metric_type: "agent.googleapis.com/memory/percent_used",
+    metric_type: "memory_utilization",
     id: 0,
     time: 0,
     value: 0,
@@ -179,15 +168,6 @@ async function getInstanceMemoryMetricList(cloudProjectId, instance_id) {
         result.time = data.points[0].interval.endTime.seconds;
         result.value = Math.round(data.points[0].value.doubleValue);
       }
-      // data.points.forEach((point, index) => {
-      //   result.dataPoints.push({
-      //     time: point.interval.endTime.seconds,
-      //     value: Math.round(point.value.doubleValue),
-      //   });
-      //   // console.log(
-      //   //   `  ${point.interval.startTime.seconds}-${point.interval.endTime.seconds}: ${point.value.doubleValue}`
-      //   // );
-      // });
     });
   } catch (err) {
     console.error("Error fetching time series data:", err);
@@ -227,68 +207,10 @@ async function getListInstanceInMultiCloudProject(project_id) {
   return listInstance;
 }
 
-async function main() {
-  const listProjectID = await getListProject();
-  var listInstance = [];
-  for (const project_id of listProjectID) {
-    const instances = await getListInstanceInMultiCloudProject(project_id);
-    listInstance = listInstance.concat(instances);
-  }
-  // console.log(listInstance);
-  for (const instance of listInstance) {
-    if (instance.provider == "google") {
-      if (instance.type == "compute#instance") {
-        const cpuMetric = await getInstanceCPUMetricList(
-          instance.cloudProjectID,
-          instance.name
-        );
-        const memoryMetric = await getInstanceMemoryMetricList(
-          instance.cloudProjectID,
-          instance.id
-        );
-        if (memoryMetric != null) {
-          if (memoryMetric.value == 0) {
-          } else {
-            memoryMetric.id = instance._id;
-            // console.log(memoryMetric);
-            //push to database + update status to running
-            axios.post("http://localhost:3000/metric", memoryMetric);
-          }
-        }
-        if (cpuMetric != null) {
-          if (cpuMetric.value == 0) {
-            //update status to terminated in database
-            if (instance.status != "TERMINATED") {
-              instance.status = "TERMINATED";
-              axios.put(
-                "http://localhost:3000/cluster/" + instance._id,
-                instance
-              );
-            }
-          } else {
-            cpuMetric.id = instance._id;
-            //push to database + update status to running
-            axios.post("http://localhost:3000/metric", cpuMetric);
-            if (instance.status != "RUNNING") {
-              instance.status = "RUNNING";
-              axios.put(
-                "http://localhost:3000/cluster/" + instance._id,
-                instance
-              );
-            }
-          }
-        }
-      } else if (instance.type == "k8s_cluster") {
-      }
-    } else {
-    }
-  }
-}
-
-main();
-
 module.exports = {
   listAllInstances,
+  getListProject,
+  getListInstanceInMultiCloudProject,
   getInstanceCPUMetricList,
   getInstanceMemoryMetricList,
 };
