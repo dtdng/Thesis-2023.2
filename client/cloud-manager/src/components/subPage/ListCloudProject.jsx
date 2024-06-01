@@ -7,11 +7,12 @@ import { ClipLoader } from "react-spinners";
 
 import "../style.scss";
 
-const ListInstances = () => {
+const ListCloudProject = ({ projects }) => {
   const { projectId } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [rawData, setRawData] = useState([]);
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -42,16 +43,15 @@ const ListInstances = () => {
 
   return (
     <div className="projectListPage">
-      <h3>List Instances</h3>
-
+      <h3>List Cloud Projects</h3>
       <Table className="mt-4" hover size="sm">
         <thead>
           <tr>
             <th>Name</th>
             <th>Provider</th>
-            <th>Region</th>
-            <th>Type</th>
+            {/* <th>Region</th> */}
             <th>Status</th>
+            {/* <th>Type</th> */}
           </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@ const ListInstances = () => {
               </td>
               <td>{instance.provider}</td>
               <td>{instance.region}</td>
-              <td>{instance.type}</td>
+              {/* <td>{instance.status}</td> */}
               <td>
                 {instance.status.toLowerCase() == "running" && (
                   <p className="running status">{instance.status}</p>
@@ -71,6 +71,7 @@ const ListInstances = () => {
                   <p className="stopped status">{instance.status}</p>
                 )}
               </td>
+              <td>{instance.type}</td>
             </tr>
           ))}
         </tbody>
@@ -79,4 +80,4 @@ const ListInstances = () => {
   );
 };
 
-export default ListInstances;
+export default ListCloudProject;

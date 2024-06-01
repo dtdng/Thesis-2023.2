@@ -1,19 +1,6 @@
 const mongoose = require("mongoose");
 
-const clusterInformation = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  region: {
-    type: String,
-    required: true,
-  },
+const CostSchema = new mongoose.Schema({
   projectId: {
     type: String,
     required: true,
@@ -22,26 +9,31 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: true,
   },
+  startDate: {
+    type: String,
+    required: true,
+  },
+  endDate: {
+    type: String,
+    required: true,
+  },
+  service: {
+    type: String,
+    required: true,
+  },
+  cost: {
+    type: String,
+    required: true,
+  },
+  currency: {
+    type: String,
+    required: true,
+  },
   provider: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-  selfLink: {
     type: String,
     required: true,
   },
 });
 
-const ClusterInformation = mongoose.model(
-  "CLUSTERINFORMATION",
-  clusterInformation
-);
-module.exports = ClusterInformation;
+const Cost = mongoose.model("cost", CostSchema);
+module.exports = Cost;

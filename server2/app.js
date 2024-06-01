@@ -8,6 +8,8 @@ const axios = require("axios");
 
 const googleInstance = require("./query/GoogleInstance.js");
 const awsInstance = require("./aws/instanceAWS.js");
+const awsBill = require("./aws/billingAWS.js");
+const googleBill = require("./bigQuery/queryBill.js");
 
 const app = express();
 const PORT = 3004;
@@ -22,8 +24,8 @@ setInterval(() => {
   collectMetric();
 }, 90000); // 1 minute 30 seconds
 
-collectMetric();
-
+collectBill();
+// collectMetric();
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
 });
@@ -144,4 +146,95 @@ async function collectMetric() {
     }
   }
   console.log("Finish collecting metric...");
+}
+
+async function collectBill() {
+  console.log("Start collecting bill...");
+
+  const listProjectID = await googleInstance.getListProject();
+  console.log(listProjectID);
+  let listCloudProject = [];
+
+  for (const project_id of listProjectID) {
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/cloudProject/project/${project_id}`
+      );
+      listCloudProject = listCloudProject.concat(res.data); // Combine all cloud projects
+    } catch (error) {
+      console.error(
+        `Error fetching cloud projects for project ID ${project_id}:`,
+        error
+      );
+    }
+  }
+
+  // console.log(listCloudProject);
+
+  for (const cloudProject of listCloudProject) {
+    if (cloudProject.provider === "google") {
+      // const { startDate, endDate } = awsBill.getStartAndEndDateOfCurrentMonth();
+      const startDate = "2024-06-01";
+      const endDate = "2024-06-28";
+      try {
+        console.log(cloudProject.projectId);
+        const bills = await googleBill.getBillingDataProjectGoogle(
+          startDate,
+          endDate,
+          "Billing_Dataset",
+          "gcp_billing_export_v1_0170AB_1A0C14_B679A1",
+          cloudProject.id,
+          cloudProject.projectId
+        );
+        // console.log(bills);
+        bills.forEach(async (bill) => {
+          try {
+            await axios.post("http://localhost:3000/cost", bill);
+          } catch (error) {
+            console.error(
+              // `Error saving Google Cloud billing data for tag ${cloudProject.tag}:`,
+              error
+            );
+          }
+        });
+      } catch (error) {
+        console.error(
+          `Error fetching Google Cloud billing data for tag ${cloudProject.tag}:`,
+          error
+        );
+      }
+      // Add logic for Google Cloud billing here
+    } else if (cloudProject.provider === "aws") {
+      // const { startDate, endDate } = awsBill.getStartAndEndDateOfCurrentMonth();
+      const startDate = "2024-05-01";
+      const endDate = "2024-05-28";
+      try {
+        const bills = await awsBill.getBillingDataApplicationAWS(
+          startDate,
+          endDate,
+          cloudProject.tag,
+          cloudProject.projectId
+        );
+        // console.log(bills);
+        bills.forEach(async (bill) => {
+          try {
+            await axios.post("http://localhost:3000/cost", bill);
+          } catch (error) {
+            console.error(
+              `Error saving AWS billing data for tag ${cloudProject.tag}:`,
+              error
+            );
+          }
+        });
+      } catch (error) {
+        console.error(
+          `Error fetching AWS billing data for tag ${cloudProject.tag}:`,
+          error
+        );
+      }
+    } else {
+      // Handle other providers if necessary
+    }
+  }
+  console.log("Finish collecting bill...");
 }

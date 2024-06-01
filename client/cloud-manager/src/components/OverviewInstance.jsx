@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import "./style.scss";
+import MetricChart from "./graph/MetricChart";
+import GraphCPU from "./graph/GraphCPU";
+import GraphMemory from "./graph/GraphMemory";
+import SimpleChart from "./graph/SimpleChart";
 
 const OverviewInstance = ({ instance }) => {
   const temp = {
@@ -20,7 +24,7 @@ const OverviewInstance = ({ instance }) => {
   }, [instance]);
 
   return (
-    <div>
+    <div className="instanceOverview">
       <div className="instanceInfomation">
         <div className="instanceInfomationTitle">
           <svg
@@ -63,7 +67,14 @@ const OverviewInstance = ({ instance }) => {
           </div>
           <div className="info">
             <div className="infoTitle">CloudProject ID</div>
-            <div className="infoContent">{data.cloudProjectID}</div>
+            {data.provider == "google" && (
+              <div className="infoContent">{data.cloudProjectID}</div>
+            )}
+            {data.provider == "aws" && (
+              <div className="infoContent">
+                {extractGroupIdentifier(data.cloudProjectID)}
+              </div>
+            )}
           </div>
           <div className="info">
             <div className="infoTitle">Provider</div>
@@ -71,10 +82,42 @@ const OverviewInstance = ({ instance }) => {
           </div>
         </div>
       </div>
-
-      
+      {data.type === "compute#instance" && (
+        <div className="row-direction">
+          <MetricChart instanceID={data._id} type={"cpu"} />
+          <MetricChart instanceID={data._id} type={"memory"} />
+        </div>
+      )}
+      {data.type === "t2.micro" && (
+        <div className="row-direction">
+          <MetricChart instanceID={data._id} type={"cpu"} />
+          {/* <MetricChart instanceID={data._id} type={"network_in"} /> */}
+          {/* <MetricChart instanceID={data._id} type={"network_out"} /> */}
+        </div>
+      )}
+      {data.type === "compute#instance" && (
+        <div className="row-direction">
+          <SimpleChart instanceIDList={[data._id]} type={"cpu"} />
+          <SimpleChart instanceIDList={[data._id]} type={"memory"} />
+        </div>
+      )}
+      {data.type === "t2.micro" && (
+        <div>
+          <div className="row-direction">
+            <SimpleChart instanceIDList={[data._id]} type={"cpu"} />
+            <SimpleChart instanceIDList={[data._id]} type={"network_in"} />
+            <SimpleChart instanceIDList={[data._id]} type={"network_out"} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default OverviewInstance;
+
+function extractGroupIdentifier(arnString) {
+  const parts = arnString.split(":"); // Split the string by ':'
+  const groupIdentifier = parts[parts.length - 1]; // Get the last part
+  return groupIdentifier;
+}

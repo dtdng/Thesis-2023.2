@@ -217,7 +217,7 @@ const GraphCPU = (idCluster) => {
   // });
 
   if (checkLoad == false) {
-    return <div className = "loading">Loading CPU Data....</div>;
+    return <div className="loading">Loading CPU Data....</div>;
   }
   return (
     <div>
@@ -228,7 +228,14 @@ const GraphCPU = (idCluster) => {
         <Tooltip />
         <Legend />
 
-        {Array.from({ length: numberOfVMS }).map((_, i) => (
+        <Area
+          key={0} // Add a unique key for each component
+          type="monotone"
+          fill="none"
+          stroke={getColor(0)}
+          dataKey={`cluster${0+1}`}
+        />
+        {/* {Array.from({ length: numberOfVMS }).map((_, i) => (
           <Area
             key={i} // Add a unique key for each component
             type="monotone"
@@ -236,7 +243,7 @@ const GraphCPU = (idCluster) => {
             stroke={getColor(i)}
             dataKey={`cluster${i + 1}`}
           />
-        ))}
+        ))} */}
       </AreaChart>
     </div>
   );

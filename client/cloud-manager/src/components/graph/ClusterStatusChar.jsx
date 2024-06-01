@@ -14,10 +14,10 @@ const ClusterStatusChar = (processedData) => {
   // }, []);
 
   useEffect(() => {
-    console.log("processedData", processedData);
+    // console.log("processedData", processedData);
     const raw = processedData.processedData.cluster;
 
-    console.log("raw", raw);
+    // console.log("raw", raw);
     setData([
       { x: "Working", y: raw.working },
       { x: "Not Working", y: raw.notWorking },

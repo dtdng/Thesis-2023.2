@@ -6,8 +6,9 @@ import TopPage from "../components/TopPage";
 import SideBarProjectDashboard from "../components/SideBarProjectDashboard";
 import axios from "axios";
 import Overview from "../components/subPage/Overview";
-import { ClipLoader } from "react-spinners";
 import ListInstances from "../components/subPage/ListInstances";
+import Billing from "../components/subPage/Billing";
+import { ClipLoader } from "react-spinners";
 
 const ProjectDashboard = () => {
   const { projectId } = useParams();
@@ -60,6 +61,8 @@ const ProjectDashboard = () => {
         <div className="midPageContent">
           {menuChoose == "Overview" && <Overview project={project} />}
           {menuChoose == "Instances" && <ListInstances project={project} />}
+          {menuChoose == "Billing" && <Billing project={project} />}
+          {/* {menuChoose == "Cloud Projects" && <ListInstances project={project} />} */}
         </div>
       </div>
     </div>

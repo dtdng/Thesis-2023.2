@@ -13,27 +13,44 @@ const AddClusterInfo = (props) => {
   const { projectId } = useParams();
   const [loading, setLoading] = useState(false);
   const [cloudProjectID, setCloudProjectID] = useState("");
-  const [provider, setProvider] = useState("Google");
+  const [provider, setProvider] = useState("google");
+
   const [loadingAddData, setLoadingAddData] = useState(false);
   const [data, setData] = useState([]);
 
+  const handleProviderChange = (event) => {
+    setData([]);
+    setProvider(event.target.value.toLowerCase());
+  };
+
   const handleCheck = async () => {
-    const provider = document.getElementById("provider").value.toLowerCase();
-    const cloudProjectID = document
-      .getElementById("cloudProjectID")
-      .value.toLowerCase();
-    setCloudProjectID(cloudProjectID);
-    setProvider(provider);
-    if (cloudProjectID == "") {
-      toast.error("Please enter the cloud project ID");
-      return;
+    var cloudProjectID = "";
+
+    if (provider === "google") {
+      cloudProjectID = document
+        .getElementById("googleProjectID")
+        .value.toLowerCase();
+    } else if (provider === "aws") {
+      cloudProjectID = document
+        .getElementById("awsApplicationTag")
+        .value.toLowerCase();
+      if (cloudProjectID == "" || awsApplicationTag == "") {
+        toast.error("Please enter the cloud project ID and application tag");
+        return;
+      }
     }
+
+    console.log("cloudProjectID", cloudProjectID);
+    setCloudProjectID(cloudProjectID);
 
     try {
       setData([]);
       setLoading(true);
-      const res = await axios.get(
-        `http://localhost:3000/cloudProject/${cloudProjectID}/${provider}`
+      const res = await axios.patch(
+        `http://localhost:3000/cloudProject/${provider}`,
+        {
+          cloudProjectID: cloudProjectID,
+        }
       );
 
       if (res.status !== 200) {
@@ -60,6 +77,32 @@ const AddClusterInfo = (props) => {
     try {
       setLoadingAddData(true);
       var count = 0;
+      if (provider === "google") {
+        const billingTableId = document.getElementById("billingTableId").value;
+        const id = document
+          .getElementById("googleProjectID")
+          .value.toLowerCase();
+        const cloudProject = {
+          projectId: projectId,
+          name: id,
+          id: id,
+          provider: provider,
+          billingTableId: billingTableId,
+        };
+        axios.post("http://localhost:3000/cloudProject", cloudProject);
+      } else if (provider === "aws") {
+        const id = document.getElementById("awsProjectID").value.toLowerCase();
+        const tag = document.getElementById("awsApplicationTag").value;
+        const cloudProject = {
+          projectId: projectId,
+          name: id,
+          id: tag,
+          provider: provider,
+          tag: tag,
+        };
+        axios.post("http://localhost:3000/cloudProject", cloudProject);
+      }
+
       // Create an array of promises for all the axios post requests
       const promises = data.map((obj) => {
         if (obj.existed) {
@@ -76,7 +119,6 @@ const AddClusterInfo = (props) => {
           type: obj.type,
           selfLink: obj.selfLink,
         };
-
         console.log("instance", instance);
         count++;
         // Return the axios post promise
@@ -116,29 +158,71 @@ const AddClusterInfo = (props) => {
         </div>
 
         <div className="row g-3">
-          <div className="col-md-7">
-            <label for="cloudProjectID" class="form-label">
-              Cloud Project ID
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="cloudProjectID"
-              placeholder="project-1234"
-            />
-          </div>
+          {provider === "google" && (
+            <div>
+              <div className="col-md-7">
+                <label htmlFor="googleProjectID" className="form-label">
+                  Cloud Project
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="googleProjectID"
+                  placeholder="project-1234"
+                />
+              </div>
+              <div className="col-md-7">
+                <label htmlFor="billingTableId" className="form-label">
+                  Billing Table ID
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="billingTableId"
+                  placeholder="table-1234"
+                />
+              </div>
+            </div>
+          )}
+          {provider === "aws" && (
+            <div>
+              <div className="col-md-7">
+                <label htmlFor="awsProjectID" className="form-label">
+                  Cloud Application
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="awsProjectID"
+                  placeholder="application-1234"
+                />
+              </div>
+              <div className="col-md-7">
+                <label htmlFor="awsApplicationTag" className="form-label">
+                  Application Tag
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="awsApplicationTag"
+                  placeholder="tag-1234"
+                />
+              </div>
+            </div>
+          )}
+
           <div className="col">
-            <label for="provider" class="form-label">
+            <label htmlFor="provider" className="form-label">
               Provider
             </label>
             <select
-              class="form-select"
+              className="form-select"
               aria-label="Default select example"
               id="provider"
+              // value={provider}
+              onChange={handleProviderChange}
             >
-              <option selected value="Google">
-                Google
-              </option>
+              <option value="Google">Google</option>
               <option value="AWS">AWS</option>
               <option value="IBM" disabled>
                 IBM

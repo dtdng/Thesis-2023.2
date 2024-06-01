@@ -38,6 +38,8 @@ const Overview = (project) => {
       cluster: 0,
       VM: 0,
     },
+    cloudProjectCount: 0,
+    cloudProject: {},
   };
 
   const [data, setData] = useState(templateData);
@@ -58,7 +60,6 @@ const Overview = (project) => {
     }
   };
   useEffect(() => {
-
     fetchData();
   }, []);
 
@@ -71,7 +72,6 @@ const Overview = (project) => {
   useEffect(() => {
     const temp = templateData;
     rawData.forEach((instance) => {
-      // Update cluster status count
       if (instance.status === "RUNNING") {
         temp.cluster.working++;
         if (instance.provider === "google") {
@@ -95,19 +95,31 @@ const Overview = (project) => {
       } else {
         temp.region[instance.region]++;
       }
+      var countryName = "";
 
       // Update country count
-      const regionParts = instance.region.split("-");
-      const regionName =
-        regionParts.length > 2
-          ? regionParts.slice(0, -1).join("-")
-          : instance.region;
-      const countryName = processedCountryName(regionName);
+      if (instance.provider === "google") {
+        const regionParts = instance.region.split("-");
+        const regionName =
+          regionParts.length > 2
+            ? regionParts.slice(0, -1).join("-")
+            : instance.region;
+        countryName = processedCountryName(regionName);
+      } else {
+        countryName = processedCountryName(instance.region);
+      }
 
       if (!temp.country[countryName]) {
         temp.country[countryName] = 1;
       } else {
         temp.country[countryName]++;
+      }
+
+      if (!temp.cloudProject[instance.cloudProjectID]) {
+        temp.cloudProjectCount++;
+        temp.cloudProject[instance.cloudProjectID] = 1;
+      } else {
+        temp.cloudProject[instance.cloudProjectID]++;
       }
 
       // Update type count
@@ -150,10 +162,6 @@ const Overview = (project) => {
 
         <div className="map">
           <MapChart processedData={data} />
-          {/* <p>CPU</p>
-        <GraphCPU />
-        <p>Memory</p>
-        <GraphMemory /> */}
         </div>
       </div>
     </div>
@@ -206,6 +214,35 @@ const nameMapping = {
   "australia-southeast1": "AU",
   "australia-southeast2": "AU",
   "africa-south1": "ZA",
+  "us-east-2": "us",
+  "us-east-1": "us",
+  "us-west-1": "us",
+  "us-west-2": "us",
+  "af-south-1": "ZA",
+  "ap-east-1": "CN",
+  "ap-south-2": "IN",
+  "ap-southeast-3": "ID",
+  "ap-southeast-4": "AU",
+  "ap-south-1": "IN",
+  "ap-northeast-3": "JP",
+  "ap-northeast-2": "KR",
+  "ap-southeast-1": "SG",
+  "ap-southeast-2": "AU",
+  "ap-northeast-1": "JP",
+  "ca-central-1": "CA",
+  "ca-west-1": "CA",
+  "eu-central-1": "DE",
+  "eu-west-1": "IE",
+  "eu-west-2": "GB",
+  "eu-south-1": "IT",
+  "eu-west-3": "FR",
+  "eu-south-2": "ES",
+  "eu-north-1": "SE",
+  "eu-central-2": "CH",
+  "il-central-1": "IL",
+  "me-south-1": "AE",
+  "me-central-1": "AE",
+  "sa-east-1": "BR",
 };
 
 const processedCountryName = (name) => {

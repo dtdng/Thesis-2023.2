@@ -28,6 +28,8 @@ const OverviewClusterInfo = (processedData) => {
       cluster: 0,
       VM: 0,
     },
+    cloudProjectCount: 0,
+    cloudProject: {},
   };
 
   const [data, setData] = useState(templateData);
@@ -90,7 +92,7 @@ const OverviewClusterInfo = (processedData) => {
       <div className="clusterOverview">
         <div className="numberOfClusters data">
           <h5>{data.type.cluster}</h5>
-          <p className="data_name">K8s Clusters</p>
+          <p className="data_name">Clusters</p>
         </div>
         <div className="numberOfVMs data">
           <h5>{data.type.VM}</h5>
@@ -100,9 +102,13 @@ const OverviewClusterInfo = (processedData) => {
           <h5>{data.regionCount}</h5>
           <p className="data_name">Regions</p>
         </div>
-        <div className="node data">
+        {/* <div className="node data">
           <h5>5</h5>
           <p className="data_name">Nodes</p>
+        </div> */}
+        <div className="CloudProject data">
+          <h5>{data.cloudProjectCount}</h5>
+          <p className="data_name">CloudProjects</p>
         </div>
       </div>
     </div>

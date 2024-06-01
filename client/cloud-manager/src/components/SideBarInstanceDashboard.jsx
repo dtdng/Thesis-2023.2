@@ -10,6 +10,7 @@ const SideBarInstanceDashboard = ({ instance, setMenuChoose }) => {
       <div>
         {instance && (
           <div className="instanceName">
+            <p>{}</p>
             <p>{instance.name}/</p>
           </div>
         )}

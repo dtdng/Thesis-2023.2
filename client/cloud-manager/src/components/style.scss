@@ -437,39 +437,149 @@
   align-items: center;
 }
 
-.instanceInfomation {
+.instanceOverview {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 1.5rem 2rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .instanceInfomation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #cec5c5;
+    max-height: 400px;
+    flex-wrap: wrap;
+    width: max-content;
+    .instanceInfomationTitle {
+      font-size: 1.25rem;
+      font-weight: 600;
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+    .instanceInfomationContent {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      padding: 1.5rem 2.5rem;
+      .info {
+        .infoTitle {
+          font-weight: 700;
+          font-size: 1rem;
+        }
+        .infoContent {
+          font-weight: 400;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+  .simpleMetricChart {
+    position: relative;
+    margin: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #cec5c5;
+    max-height: 200px;
+    max-width: 300px;
+    height: fit-content;
+    width: fit-content;
+    padding: 1.5rem 1rem;
+    overflow: hidden;
+    &:hover {
+      box-shadow: 2px 10px 10px 3px #ebebeb;
+    }
+
+    .simpleMetricChartValue {
+      position: absolute;
+      left: 45%;
+      top: 65%;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.metricChart {
+  margin: 1.5rem 1rem;
   background-color: white;
   border-radius: 5px;
   border: 1px solid #cec5c5;
-  max-height: 400px;
-  flex-wrap: wrap;
-  width: max-content;
-  .instanceInfomationTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    svg {
-      margin-right: 0.5rem;
-    }
+  padding: 1.5rem 1rem;
+  &:hover {
+    box-shadow: 2px 10px 10px 3px #ebebeb;
   }
-  .instanceInfomationContent {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding: 1.5rem 2.5rem;
-    .info {
-      .infoTitle {
-        font-weight: 700;
-        font-size: 1rem;
-      }
-      .infoContent {
-        font-weight: 400;
-        font-size: 0.9rem;
-      }
-    }
+}
+
+.overviewBudgetContainer {
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 5px;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid #cec5c5;
+  svg {
+    margin: 0.5rem 0.5rem;
+  }
+  .totalBillTitle {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .totalBill {
+    margin-top: -1rem;
+    font-weight: 700;
+    font-size: 2.25rem;
+  }
+  .budget {
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+}
+
+.status {
+  border-radius: 10px;
+  margin: 0.2rem 0rem;
+  font-weight: 600;
+  width: fit-content;
+  min-width: 5rem;
+  padding: 0.1rem 0.5rem;
+  text-align: center;
+}
+
+.running {
+  color: #16c098;
+  background-color: #b5f5e6;
+}
+
+.stopped {
+  color: #ef6161;
+  background-color: #f3cccc;
+}
+
+.billProjectGraph {
+  max-width: 1000px;
+  margin: 1rem 0rem;
+  border-radius: 5px;
+  height: max-content;
+}
+
+.billingGraph {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  .billProjectCircleGraph{
+    width: 25%;
+    margin: 1rem 1rem;
   }
 }
