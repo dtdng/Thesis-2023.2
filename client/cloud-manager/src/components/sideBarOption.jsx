@@ -4,6 +4,7 @@ import dashboardIcon from "../assets/dashboard.svg";
 import settingIcon from "../assets/setting.svg";
 import graphIcon from "../assets/graph.svg";
 import listIcon from "../assets/list.svg";
+import projectIcon from "../assets/project.svg";
 import "./style.scss";
 
 const SideBarOption = ({ text, setMenuChoose }) => {
@@ -20,6 +21,9 @@ const SideBarOption = ({ text, setMenuChoose }) => {
       {text === "Setting" && <img src={settingIcon} alt="setting" />}
       {text === "Billing" && <img src={graphIcon} alt="billing" />}
       {text === "Instances" && <img src={listIcon} alt="instances" />}
+      {text === "Cloud Projects" && (
+        <img src={projectIcon} alt="cloud projects" />
+      )}
       <p>{text}</p>
     </div>
   );

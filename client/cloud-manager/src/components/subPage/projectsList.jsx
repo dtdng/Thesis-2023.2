@@ -43,9 +43,9 @@ const ProjectsList = () => {
   };
 
   return (
-    <div className="projectListPage">
+    <div className="projectListPage overflow-auto shadow">
       <div className="projectHeader">
-        <h3>Project List</h3>
+        <h3 className="text-2xl font-bold ">Project List</h3>
         <CreateProjectForm
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
@@ -65,14 +65,24 @@ const ProjectsList = () => {
         </div>
       </div>
       <div className="projectListTable">
-        <Table className="mt-4" hover size="sm">
-          <thead>
+        <table className="mt-4 w-full" hover size="sm">
+          <thead className="bg-gray-50 border-b-2 border-gray-200">
             <tr>
-              <th>Project Name</th>
-              <th>Project Description</th>
-              <th>Number of VMs</th>
-              <th>Billing</th>
-              <th>Status</th>
+              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                Project Name
+              </th>
+              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                Project Description
+              </th>
+              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                Number of VMs
+              </th>
+              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                Billing
+              </th>
+              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                Status
+              </th>
             </tr>
           </thead>
 
@@ -81,16 +91,22 @@ const ProjectsList = () => {
               <div className="loading">Loading List Project Data....</div>
             )}
             {projectsList.map((project) => (
-              <tr key={project._id}>
-                <td>
+              <tr key={project._id} className="hover:bg-slate-100">
+                <td className="pl-3 text-blue-500 hover:underline whitespace-nowrap">
                   <Link to={`/project/${project._id}`}>
                     {project.projectName}
                   </Link>
                 </td>
-                <td>{project.projectDescription}</td>
-                <td>{project.numberOfVMs}</td>
-                <td>{project.totalBill} $</td>
-                <td>
+                <td className="pl-3 text-gray-700 whitespace-nowrap">
+                  {project.projectDescription}
+                </td>
+                <td className="pl-3 text-gray-700 whitespace-nowrap">
+                  {project.numberOfVMs}
+                </td>
+                <td className="pl-3 text-gray-700 whitespace-nowrap">
+                  {project.totalBill} $
+                </td>
+                <td className="pl-3whitespace-nowrap">
                   {project.projectStatus == "running" && (
                     <p className="running status">{project.projectStatus}</p>
                   )}
@@ -104,7 +120,7 @@ const ProjectsList = () => {
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </div>
     </div>
   );

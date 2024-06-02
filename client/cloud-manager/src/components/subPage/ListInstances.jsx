@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+
 import { ClipLoader } from "react-spinners";
 
 import "../style.scss";
@@ -41,29 +42,45 @@ const ListInstances = () => {
     );
 
   return (
-    <div className="projectListPage">
-      <h3>List Instances</h3>
+    <div className="projectListPage overflow-auto rounded-lg shadow">
+      <h3 className="text-2xl font-bold ">List Instances</h3>
 
-      <Table className="mt-4" hover size="sm">
-        <thead>
+      <table className="mt-4 w-full" hover size="sm">
+        <thead className="bg-gray-50 border-b-2 border-gray-200">
           <tr>
-            <th>Name</th>
-            <th>Provider</th>
-            <th>Region</th>
-            <th>Type</th>
-            <th>Status</th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Name
+            </th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Provider
+            </th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Region
+            </th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Type
+            </th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Status
+            </th>
           </tr>
         </thead>
         <tbody>
-          {rawData.map((instance) => (
-            <tr key={instance._id}>
-              <td>
+          {rawData.map((instance, index) => (
+            <tr key={instance._id} className="hover:bg-slate-100">
+              <td className="pl-3 text-blue-500 hover:underline whitespace-nowrap">
                 <Link to={`/instance/${instance._id}`}>{instance.name}</Link>
               </td>
-              <td>{instance.provider}</td>
-              <td>{instance.region}</td>
-              <td>{instance.type}</td>
-              <td>
+              <td className="pl-3 text-gray-700 whitespace-nowrap">
+                {instance.provider}
+              </td>
+              <td className="pl-3 text-gray-700 whitespace-nowrap">
+                {instance.region}
+              </td>
+              <td className="pl-3 text-gray-700 whitespace-nowrap">
+                {instance.type}
+              </td>
+              <td className="pl-3 whitespace-nowrap">
                 {instance.status.toLowerCase() == "running" && (
                   <p className="running status">{instance.status}</p>
                 )}
@@ -74,7 +91,7 @@ const ListInstances = () => {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 };

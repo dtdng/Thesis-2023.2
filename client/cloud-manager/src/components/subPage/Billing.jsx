@@ -119,9 +119,24 @@ const Billing = () => {
                 <tr key={index}>
                   <td>{item.name}</td>
 
-                  {data.billByCloudProject[item.id] != undefined && (
-                    <td>{data.billByCloudProject[item.id].totalBill}</td>
-                  )}
+                  {data.billByCloudProject[item.id] != undefined &&
+                    data.billByCloudProject[item.id].totalBill != 0 && (
+                      <td>{data.billByCloudProject[item.id].totalBill}</td>
+                    )}
+                  {data.billByCloudProject[item.id] != undefined &&
+                    data.billByCloudProject[item.id].totalBill == 0 && (
+                      <td>
+                        {" "}
+                        <p
+                          className="noDataNote"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="It may be because the project has no cost data or several information is missing. Please check the cloud project dashboard for ensuring."
+                        >
+                          has no cost data
+                        </p>
+                      </td>
+                    )}
                   <td>0</td>
                 </tr>
               ))}

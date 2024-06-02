@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./contexts/authContext";
 import ProjectDashboard from "./pages/ProjectDashboard";
 import InstanceDashboard from "./pages/InstanceDashboard";
+import CloudProjectDashboard from "./pages/CloudProjectDashboard";
 function App() {
   const { currentUser } = useAuth();
   const ProtectedRoute = ({ children }) => {
@@ -60,6 +61,15 @@ function App() {
           element={
             <ProtectedRoute>
               <ProjectDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/cloudProject/:cloudProjectId"
+          element={
+            <ProtectedRoute>
+              <CloudProjectDashboard />
             </ProtectedRoute>
           }
         />

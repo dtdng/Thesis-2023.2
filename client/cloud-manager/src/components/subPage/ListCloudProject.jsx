@@ -17,7 +17,7 @@ const ListCloudProject = ({ projects }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:3000/clusters/${projectId}`
+        `http://localhost:3000/cloudProject/project/${projectId}`
       );
       setRawData(response.data);
       console.log("response.data", response.data);
@@ -42,40 +42,38 @@ const ListCloudProject = ({ projects }) => {
     );
 
   return (
-    <div className="projectListPage">
-      <h3>List Cloud Projects</h3>
-      <Table className="mt-4" hover size="sm">
-        <thead>
+    <div className="projectListPage overflow-auto rounded-lg shadow">
+      <h3 className="text-2xl font-bold ">List Cloud Projects</h3>
+      <table className="mt-4 w-full" hover size="sm">
+        <thead className="bg-gray-50 border-b-2 border-gray-200">
           <tr>
-            <th>Name</th>
-            <th>Provider</th>
-            {/* <th>Region</th> */}
-            <th>Status</th>
-            {/* <th>Type</th> */}
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Name
+            </th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              ID
+            </th>
+            <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              Provider
+            </th>
           </tr>
         </thead>
         <tbody>
           {rawData.map((instance) => (
-            <tr key={instance._id}>
-              <td>
-                <Link to={`/instance/${instance._id}`}>{instance.name}</Link>
+            <tr key={instance._id} className="hover:bg-slate-100">
+              <td className="pl-3 text-blue-500 hover:underline whitespace-nowrap">
+                <Link to={`/cloudProject/${instance._id}`}>
+                  {instance.name}
+                </Link>
               </td>
-              <td>{instance.provider}</td>
-              <td>{instance.region}</td>
-              {/* <td>{instance.status}</td> */}
-              <td>
-                {instance.status.toLowerCase() == "running" && (
-                  <p className="running status">{instance.status}</p>
-                )}
-                {instance.status.toLowerCase() == "terminated" && (
-                  <p className="stopped status">{instance.status}</p>
-                )}
+              <td className="pl-3 text-gray-700 ">{instance.id}</td>
+              <td className="pl-3 text-gray-700 whitespace-nowrap">
+                {instance.provider}
               </td>
-              <td>{instance.type}</td>
             </tr>
           ))}
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 };

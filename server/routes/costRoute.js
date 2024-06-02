@@ -34,7 +34,18 @@ app.get("/costs/project/:projectId", async (request, response) => {
 
 app.get("/costs/cloudProject/:cloudProjectID", async (request, response) => {
   const cloudProjectId = request.params.cloudProjectID;
-  const costs = await Cost.find({ cloudProjectId: cloudProjectId });
+  const costs = await Cost.find({ cloudProjectID: cloudProjectId });
+  try {
+    response.send(costs);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+app.patch("/costs/cloudProject/", async (request, response) => {
+  console.log("request", request.body);
+  const cloudProjectId = request.body.cloudProjectID;
+  const costs = await Cost.find({ cloudProjectID: cloudProjectId });
   try {
     response.send(costs);
   } catch (error) {

@@ -44,6 +44,32 @@ app.get("/cluster/:id", async (request, response) => {
   }
 });
 
+app.get("/cluster/cloudProject/:cloudProjectId", async (request, response) => {
+  const cloudProjectID = request.params.cloudProjectId;
+  const cluster = await ClusterInformation.find({
+    cloudProjectID: cloudProjectID,
+  });
+
+  try {
+    response.send(cluster);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+app.patch("/cluster/cloudProject/", async (request, response) => {
+  const cloudProjectID = request.body.cloudProjectID;
+  const cluster = await ClusterInformation.find({
+    cloudProjectID: cloudProjectID,
+  });
+
+  try {
+    response.send(cluster);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 // app.put("/cluster/:id", async (request, response) => {
 //   console.log("request.body", request.body);
 //   try {

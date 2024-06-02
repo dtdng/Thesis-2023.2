@@ -232,14 +232,24 @@ const AddClusterInfo = (props) => {
         </div>
 
         <div>
-          <Table className="mt-4" hover size="sm">
-            <thead>
+          <table className="mt-4 w-full" hover size="sm">
+            <thead className="bg-gray-50 border-b-2 border-gray-200">
               <tr>
-                <th>Name</th>
-                <th>Zone</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Added</th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Name
+                </th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Zone
+                </th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Status
+                </th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Type
+                </th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Added
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -247,14 +257,14 @@ const AddClusterInfo = (props) => {
                 <div className="loading">Loading Instance Data....</div>
               )}
               {data.map((obj) => (
-                <tr key={obj.id}>
-                  <td>
+                <tr key={obj.id} className="hover:bg-slate-100">
+                  <td className="pl-3  whitespace-nowrap">
                     <Link to={obj.selfLink}>{obj.name}</Link>
                   </td>
-                  <td>{obj.zone}</td>
-                  <td>{obj.status}</td>
-                  <td>{obj.type}</td>
-                  <td>
+                  <td className="pl-3 text-gray-700 ">{obj.zone}</td>
+                  <td className="pl-3 text-gray-700 ">{obj.status}</td>
+                  <td className="pl-3 text-gray-700 ">{obj.type}</td>
+                  <td className="pl-3 text-gray-700 ">
                     <input
                       type="checkbox"
                       readOnly
@@ -265,7 +275,7 @@ const AddClusterInfo = (props) => {
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </table>
         </div>
 
         <div>

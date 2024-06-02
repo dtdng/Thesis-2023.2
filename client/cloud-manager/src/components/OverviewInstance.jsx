@@ -25,8 +25,8 @@ const OverviewInstance = ({ instance }) => {
 
   return (
     <div className="instanceOverview">
-      <div className="instanceInfomation">
-        <div className="instanceInfomationTitle">
+      <div className="instanceInformation">
+        <div className="instanceInformationTitle">
           <svg
             width="30px"
             height="30px"
@@ -42,7 +42,7 @@ const OverviewInstance = ({ instance }) => {
           </svg>
           Instance info
         </div>
-        <div className="instanceInfomationContent">
+        <div className="instanceInformationContent">
           <div className="info">
             <div className="infoTitle">Name</div>
             <div className="infoContent">{data.name}</div>
@@ -56,7 +56,7 @@ const OverviewInstance = ({ instance }) => {
             <div className="infoContent">{data.type}</div>
           </div>
         </div>
-        <div className="instanceInfomationContent">
+        <div className="instanceInformationContent">
           <div className="info">
             <div className="infoTitle">Status</div>
             <div className="infoContent">{data.status}</div>

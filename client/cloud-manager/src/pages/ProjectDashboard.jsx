@@ -8,6 +8,7 @@ import axios from "axios";
 import Overview from "../components/subPage/Overview";
 import ListInstances from "../components/subPage/ListInstances";
 import Billing from "../components/subPage/Billing";
+import ListCloudProject from "../components/subPage/ListCloudProject";
 import { ClipLoader } from "react-spinners";
 
 const ProjectDashboard = () => {
@@ -61,8 +62,10 @@ const ProjectDashboard = () => {
         <div className="midPageContent">
           {menuChoose == "Overview" && <Overview project={project} />}
           {menuChoose == "Instances" && <ListInstances project={project} />}
+          {menuChoose == "Cloud Projects" && (
+            <ListCloudProject project={project} />
+          )}
           {menuChoose == "Billing" && <Billing project={project} />}
-          {/* {menuChoose == "Cloud Projects" && <ListInstances project={project} />} */}
         </div>
       </div>
     </div>
