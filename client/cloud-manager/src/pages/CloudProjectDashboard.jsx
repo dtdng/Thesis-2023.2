@@ -7,6 +7,7 @@ import "./style.scss";
 import TopPage from "../components/TopPage";
 import SideBarCloudProjectDashboard from "../components/SideBarCloudProjectDashboard";
 import OverviewProject from "../components/OverviewCloudProject";
+import Setting from "../components/subPage/Setting";
 
 const CloudProjectDashboard = () => {
   const { cloudProjectId } = useParams();
@@ -79,6 +80,14 @@ const CloudProjectDashboard = () => {
               cloudProject={cloudProject}
               listInstances={listInstances}
               billing={billing}
+              setMenuChoose={setMenuChoose}
+            />
+          )}
+          {menuChoose === "Setting" && (
+            <Setting
+              type="cloudProject"
+              cloudProject={cloudProject}
+              listInstances={listInstances}
             />
           )}
         </div>

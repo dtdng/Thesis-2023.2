@@ -240,4 +240,19 @@ app.get("/cloudProject/project/:projectID", async (request, response) => {
   }
 });
 
+app.put("/cloudProject/:id", async (request, response) => {
+  const id = request.params.id;
+
+  try {
+    const cloudProject = await CloudProject.findByIdAndUpdate(
+      id,
+      request.body,
+      { new: true, runValidators: true }
+    );
+    response.status(200).send(cloudProject);
+  } catch (error) {
+    response.status(404).send("Cloud project not found");
+  }
+});
+
 module.exports = app;

@@ -1,9 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-import { VictoryPie, VictoryLegend } from "victory";
-// import "./style.scss";
+import {
+  PieChart,
+  Pie,
+  Sector,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 
 var arrayColor = [
   "#82ca9d",
@@ -19,50 +25,60 @@ var arrayColor = [
 
 const templateData = [
   {
-    x: "VM_instance",
-    y: 170,
+    name: "VM_instance",
+    value: 170,
   },
-  { x: "Cluster", y: 11 },
+  { name: "Cluster", value: 11 },
 ];
 
-const templateLegend = [{ name: "VM_instance" }, { name: "Cluster" }];
-
-const BillCateGoryCircleChart = ({ billingData }) => {
+const BillCategoryCircleChart = ({ billingData }) => {
   const [displayData, setDisplayData] = useState(templateData);
-  const [legendData, setLegendData] = useState(templateLegend);
+
   useEffect(() => {
-    const aggregatedCosts = aggregateCostsByCategory(billingData);
-    const transformedData = transformToXYFormat(aggregatedCosts);
-    const legend = getLegend(aggregatedCosts);
-    setLegendData(legend);
+    if (billingData.length == 0) return;
+    console.log(billingData);
+    const { aggregatedCosts, totalCost } =
+      aggregateCostsByCategory(billingData);
+    const transformedData = transformToXYFormat({ aggregatedCosts, totalCost });
+    console.log(transformedData);
     setDisplayData(transformedData);
   }, [billingData]);
 
-  return (
-    <div className="projectListPage rounded-lg shadow">
-      <h3 className="text-xl font-bold">Billing Category</h3>
-      <div className="row-direction">
-        <VictoryPie
-          colorScale={arrayColor}
-          data={displayData}
-          labels={({ datum }) => ``}
-        />
-        <VictoryLegend
-          // x={125}
-          // y={10}
-          width={300}
-          colorScale={arrayColor}
-          centerTitle
-          // orientation="horizontal"
-          gutter={20}
-          data={legendData}
-        />
+  if (billingData.length == 0)
+    return (
+      <div className="projectListPage w-max align-middle justify-center">
+        <h3 className="text-xl font-bold">Billing Category Overall</h3>
+        Has no data to display
       </div>
+    );
+
+  return (
+    <div className="bg-white p-3 m-3 shadow rounded-md border-gray-900 border">
+      <h3 className="text-xl font-bold">Billing Category Overall (%)</h3>
+      <ResponsiveContainer width={350} height={300}>
+        <PieChart width={400} height={400}>
+          <Pie
+            dataKey="value"
+            data={displayData}
+            startAngle={90}
+            endAngle={450}
+          >
+            {displayData.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={arrayColor[index % arrayColor.length]}
+              />
+            ))}
+          </Pie>
+          <Legend />
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };
 
-export default BillCateGoryCircleChart;
+export default BillCategoryCircleChart;
 
 const serviceMapping = {
   // AWS Services
@@ -96,7 +112,7 @@ const serviceMapping = {
   "Cloud SQL": "Database",
   Firestore: "Database",
   Bigtable: "Database",
-  VPC: "Networking",
+  // VPC: "Networking",
   Networking: "Networking",
   "VM Manager": "Monitoring",
   "Cloud Logging": "Monitoring",
@@ -113,10 +129,11 @@ const serviceMapping = {
   // Add other mappings as needed
 };
 
-const USD_TO_VND_RATE = 23000; // Example conversion rate
+const USD_TO_VND_RATE = 24000; // Example conversion rate
 
 const aggregateCostsByCategory = (costs) => {
   const aggregatedCosts = {};
+  let totalCost = 0;
 
   costs.forEach((bill) => {
     let costInUSD = parseFloat(bill.cost);
@@ -132,21 +149,15 @@ const aggregateCostsByCategory = (costs) => {
     }
 
     aggregatedCosts[category] += costInUSD;
+    totalCost += costInUSD;
   });
 
-  return aggregatedCosts;
+  return { aggregatedCosts, totalCost };
 };
 
-const transformToXYFormat = (aggregatedCosts) => {
+const transformToXYFormat = ({ aggregatedCosts, totalCost }) => {
   return Object.entries(aggregatedCosts).map(([key, value]) => ({
-    x: key,
-    y: value,
+    name: key,
+    value: Math.round((value / totalCost) * 100 * 100) / 100,
   }));
 };
-
-const getLegend = (aggregatedCosts) => {
-  return Object.keys(aggregatedCosts).map((key) => ({ name: key }));
-};
-
-// const aggregatedCosts = aggregateCostsByCategory(costs);
-// console.log(aggregatedCosts);

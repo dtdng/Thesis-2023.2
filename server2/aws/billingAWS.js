@@ -59,18 +59,20 @@ const getBillingDataApplicationAWS = async (
     console.error("Error fetching billing data:", error);
     return null;
   }
-  console.log(result);
+  // console.log(result);
   return result;
 };
 
-function getStartAndEndDateOfCurrentMonth() {
-  const now = new Date();
+function getStartAndEndDate(month) {
+  // Parse the month parameter
+  const year = parseInt(month.slice(0, 4), 10);
+  const monthIndex = parseInt(month.slice(4), 10);
 
-  // Get the first day of the current month
-  const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+  // Get the first day of the specified month
+  const startDate = new Date(year, monthIndex - 1, 1);
 
-  // Get the last day of the current month
-  const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  // Get the last day of the specified month
+  const endDate = new Date(year, monthIndex, 0);
 
   // Format the dates as YYYY-MM-DD
   const formatDate = (date) => {
@@ -85,8 +87,7 @@ function getStartAndEndDateOfCurrentMonth() {
     endDate: formatDate(endDate),
   };
 }
-
 module.exports = {
   getBillingDataApplicationAWS,
-  getStartAndEndDateOfCurrentMonth,
+  getStartAndEndDate,
 };

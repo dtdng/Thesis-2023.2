@@ -14,11 +14,11 @@ const Home = () => {
     <div className="homePage">
       <TopPage />
       <div className="midPage">
-        <SideBar setMenuChoose={setMenuChoose}/>
+        <SideBar setMenuChoose={setMenuChoose} />
         <div className="midPageContent">
           {menuChoose == "Dashboard" && <ProjectsList />}
           {menuChoose == "Profile" && <Profile />}
-          {menuChoose == "Setting" && <Setting />}
+          {menuChoose == "Setting" && <Setting type="account" />}
         </div>
       </div>
     </div>

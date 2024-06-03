@@ -65,7 +65,7 @@ const ProjectsList = () => {
         </div>
       </div>
       <div className="projectListTable">
-        <table className="mt-4 w-full" hover size="sm">
+        <table className="mt-4 w-full " hover size="sm">
           <thead className="bg-gray-50 border-b-2 border-gray-200">
             <tr>
               <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
@@ -74,12 +74,12 @@ const ProjectsList = () => {
               <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
                 Project Description
               </th>
-              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+              {/* <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
                 Number of VMs
               </th>
               <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
                 Billing
-              </th>
+              </th> */}
               <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
                 Status
               </th>
@@ -100,12 +100,12 @@ const ProjectsList = () => {
                 <td className="pl-3 text-gray-700 whitespace-nowrap">
                   {project.projectDescription}
                 </td>
-                <td className="pl-3 text-gray-700 whitespace-nowrap">
+                {/* <td className="pl-3 text-gray-700 whitespace-nowrap">
                   {project.numberOfVMs}
                 </td>
                 <td className="pl-3 text-gray-700 whitespace-nowrap">
                   {project.totalBill} $
-                </td>
+                </td> */}
                 <td className="pl-3whitespace-nowrap">
                   {project.projectStatus == "running" && (
                     <p className="running status">{project.projectStatus}</p>

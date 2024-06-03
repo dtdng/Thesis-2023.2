@@ -34,7 +34,6 @@ const templateData = [
 
 const BillingGraph = (rawData) => {
   const { billData, cloudProjectList } = rawData;
-  console.log("cloud project list", cloudProjectList);
   const [displayData, setDisplayData] = useState(templateData);
 
   useEffect(() => {
@@ -44,8 +43,8 @@ const BillingGraph = (rawData) => {
   }, [billData, cloudProjectList]);
 
   return (
-    <div className="projectListPage billProjectGraph">
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="bg-white p-3 m-3 shadow rounded-md border-gray-900 border">
+      <ResponsiveContainer width={700} height={300}>
         <BarChart
           width={1000}
           height={300}

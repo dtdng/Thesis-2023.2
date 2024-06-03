@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import closeIcon from "../../assets/black-cancel.svg";
 import axios from "axios";
-import { Table } from "react-bootstrap";
+import { Accordion, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
@@ -88,6 +88,7 @@ const AddClusterInfo = (props) => {
           id: id,
           provider: provider,
           billingTableId: billingTableId,
+          billingAccount: "",
         };
         axios.post("http://localhost:3000/cloudProject", cloudProject);
       } else if (provider === "aws") {

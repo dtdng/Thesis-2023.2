@@ -24,8 +24,11 @@ setInterval(() => {
   collectMetric();
 }, 90000); // 1 minute 30 seconds
 
-collectBill();
-// collectMetric();
+collectBill("202404");
+collectBill("202405");
+collectBill("202406");
+
+collectMetric();
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
 });
@@ -148,7 +151,7 @@ async function collectMetric() {
   console.log("Finish collecting metric...");
 }
 
-async function collectBill() {
+async function collectBill(month) {
   console.log("Start collecting bill...");
 
   const listProjectID = await googleInstance.getListProject();
@@ -173,16 +176,10 @@ async function collectBill() {
 
   for (const cloudProject of listCloudProject) {
     if (cloudProject.provider === "google") {
-      // const { startDate, endDate } = awsBill.getStartAndEndDateOfCurrentMonth();
-      const startDate = "2024-06-01";
-      const endDate = "2024-06-28";
       try {
-        console.log(cloudProject.projectId);
         const bills = await googleBill.getBillingDataProjectGoogle(
-          startDate,
-          endDate,
-          "Billing_Dataset",
-          "gcp_billing_export_v1_0170AB_1A0C14_B679A1",
+          month,
+          cloudProject.billingTableId,
           cloudProject.id,
           cloudProject.projectId
         );
@@ -205,9 +202,8 @@ async function collectBill() {
       }
       // Add logic for Google Cloud billing here
     } else if (cloudProject.provider === "aws") {
-      // const { startDate, endDate } = awsBill.getStartAndEndDateOfCurrentMonth();
-      const startDate = "2024-05-01";
-      const endDate = "2024-05-28";
+      const { startDate, endDate } = awsBill.getStartAndEndDate(month);
+
       try {
         const bills = await awsBill.getBillingDataApplicationAWS(
           startDate,

@@ -11,16 +11,13 @@ const { BigQuery } = require("@google-cloud/bigquery");
 // const tableId = "gcp_billing_export_v1_0170AB_1A0C14_B679A1";
 
 async function getBillingDataProjectGoogle(
-  startDate,
-  endDate,
-  datasetId,
+  month,
   tableId,
   cloudProjectID,
   projectId
 ) {
-  
   const bigquery = new BigQuery({
-    projectId: cloudProjectID,
+    // projectId: cloudProjectID,
   });
 
   const query = `
@@ -29,8 +26,8 @@ async function getBillingDataProjectGoogle(
       SUM(cost) AS total_cost, 
       invoice.month AS month, 
       currency
-    FROM \`${cloudProjectID}.${datasetId}.${tableId}\`
-    WHERE DATE(_PARTITIONTIME) = "${endDate}"
+    FROM \`${tableId}\`
+    WHERE invoice.month='${month}' AND project.id='${cloudProjectID}'
     
     GROUP BY service_description, month, currency
     ORDER BY total_cost DESC
@@ -43,6 +40,7 @@ async function getBillingDataProjectGoogle(
 
     // Wait for the query to finish
     const [rows] = await job.getQueryResults();
+    const { startDate, endDate } = getStartAndEndDate(month);
 
     // Process the rows as needed
     const result = rows.map((row) => ({
@@ -62,5 +60,42 @@ async function getBillingDataProjectGoogle(
     return null;
   }
 }
+
+function getStartAndEndDate(month) {
+  // Parse the month parameter
+  const year = parseInt(month.slice(0, 4), 10);
+  const monthIndex = parseInt(month.slice(4), 10);
+
+  // Get the first day of the specified month
+  const startDate = new Date(year, monthIndex - 1, 1);
+
+  // Get the last day of the specified month
+  const endDate = new Date(year, monthIndex, 0);
+
+  // Format the dates as YYYY-MM-DD
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  return {
+    startDate: formatDate(startDate),
+    endDate: formatDate(endDate),
+  };
+}
+const main = async () => {
+  const response = await getBillingDataProjectGoogle(
+    "202405",
+    "fir-learning-25dbc.BillingDataset",
+    "graduation-reasearch",
+    "test1"
+  );
+
+  console.log(response);
+};
+
+// main();
 
 module.exports = { getBillingDataProjectGoogle };

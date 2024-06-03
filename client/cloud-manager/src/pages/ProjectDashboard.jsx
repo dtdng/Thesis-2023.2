@@ -10,6 +10,7 @@ import ListInstances from "../components/subPage/ListInstances";
 import Billing from "../components/subPage/Billing";
 import ListCloudProject from "../components/subPage/ListCloudProject";
 import { ClipLoader } from "react-spinners";
+import Setting from "../components/subPage/Setting";
 
 const ProjectDashboard = () => {
   const { projectId } = useParams();
@@ -66,6 +67,9 @@ const ProjectDashboard = () => {
             <ListCloudProject project={project} />
           )}
           {menuChoose == "Billing" && <Billing project={project} />}
+          {menuChoose == "Setting" && (
+            <Setting type="project" project={project} />
+          )}
         </div>
       </div>
     </div>

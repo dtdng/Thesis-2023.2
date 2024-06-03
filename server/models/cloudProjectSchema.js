@@ -26,6 +26,10 @@ const cloudProject = new mongoose.Schema({
     type: String,
     required: false,
   },
+  billingAccount: {
+    type: String,
+    required: false,
+  },
 });
 
 const CloudProject = mongoose.model("CLOUDPROJECT", cloudProject);

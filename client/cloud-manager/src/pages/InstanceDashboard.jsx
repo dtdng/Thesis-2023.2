@@ -7,6 +7,7 @@ import SideBarInstanceDashboard from "../components/SideBarInstanceDashboard";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import OverviewInstance from "../components/OverviewInstance";
+import Setting from "../components/subPage/Setting";
 
 const InstanceDashboard = () => {
   const { instanceId } = useParams();
@@ -60,6 +61,7 @@ const InstanceDashboard = () => {
           {menuChoose === "Overview" && (
             <OverviewInstance instance={instance} />
           )}
+          {menuChoose === "Setting" && <Setting type="instance" />}
         </div>
       </div>
     </div>

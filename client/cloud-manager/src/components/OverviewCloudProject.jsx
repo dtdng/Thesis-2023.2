@@ -5,19 +5,29 @@ import { ClipLoader } from "react-spinners";
 import "./style.scss";
 // import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import BillCateGoryCircleChart from "./graph/BillCategoryCircleChar";
+import BillCategoryCircleChart from "./graph/BillCategoryCircleChar";
+import BillCategoryMonthBarChart from "./graph/BillCategoryMonthBarChar";
 var templateData = {
   id: "123",
   name: "test",
   provider: "test",
 };
 
-const OverviewCloudProject = ({ cloudProject, listInstances, billing }) => {
+const OverviewCloudProject = ({
+  cloudProject,
+  listInstances,
+  billing,
+  setMenuChoose,
+}) => {
   const [data, setData] = useState(templateData);
 
   useEffect(() => {
     setData(cloudProject);
   }, [cloudProject]);
+
+  const handleGotoBill = () => {
+    setMenuChoose("Setting");
+  };
 
   return (
     <div className="instanceOverview">
@@ -57,16 +67,35 @@ const OverviewCloudProject = ({ cloudProject, listInstances, billing }) => {
                 <div className="infoTitle">Billing Table ID</div>
                 <div className="infoContent">{data.billingTableId}</div>
               </div>
-              {/* <div className="info">
-                <div className="infoTitle">Billing Table ID</div>
-                <div className="infoContent">{data.billingTableId}</div>
-              </div> */}
             </div>
           )}
+          <div
+            className="pt-3 row-direction cursor-pointer group"
+            onClick={handleGotoBill}
+          >
+            <svg
+              className="ml-2 cursor-pointer"
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 15 15"
+            >
+              <path
+                fill="black"
+                d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414"
+              />
+            </svg>
+            <p className="text-sm italic group-hover:underline">
+              Go to the cloudProject setting
+            </p>
+          </div>
         </div>
       </div>
       <div className="billingInformation ml-10 max-h-90  mb-4 max-w-100">
-        <BillCateGoryCircleChart billingData={billing} />
+        <BillCategoryCircleChart billingData={billing} />
+      </div>
+      <div className="billingInformation ml-10 max-h-90  mb-4 max-w-100">
+        <BillCategoryMonthBarChart billingData={billing} />
       </div>
       <div className="projectListPage m-8 overflow-auto rounded-lg shadow">
         <h3 className="text-2xl font-bold ">List Instances</h3>

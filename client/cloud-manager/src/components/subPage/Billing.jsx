@@ -99,9 +99,10 @@ const Billing = () => {
         <p className="totalBill">${Math.round(data.totalBill * 100) / 100}</p>
         <p className="budget">Project Budget: ${budget}</p>
       </div>
-      <div className="billingGraph">
-        <BillingGraph billData={data} cloudProjectList={listCloudProject} />
+
+      <div className="billingGraph flex-wrap">
         <BillCircleChart billData={data} cloudProjectList={listCloudProject} />
+        <BillingGraph billData={data} cloudProjectList={listCloudProject} />
       </div>
       <div className="billCloudProject projectListPage">
         <Table className="mt-4" hover size="sm">
@@ -176,7 +177,7 @@ const processBills = (bills, cloudProjects) => {
       costInUSD = costInUSD;
     } else if (currency == "VND") {
       //convert to USD
-      costInUSD = costInUSD / 23000;
+      costInUSD = costInUSD / 24000;
     }
 
     let monthBill = billByCloudProject[projectKey].bills.find(
