@@ -30,3 +30,4 @@ const SideBarOption = ({ text, setMenuChoose }) => {
 };
 
 export default SideBarOption;
+

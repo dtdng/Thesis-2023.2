@@ -36,11 +36,11 @@ const BillCategoryCircleChart = ({ billingData }) => {
 
   useEffect(() => {
     if (billingData.length == 0) return;
-    console.log(billingData);
+    // console.log(billingData);
     const { aggregatedCosts, totalCost } =
       aggregateCostsByCategory(billingData);
     const transformedData = transformToXYFormat({ aggregatedCosts, totalCost });
-    console.log(transformedData);
+    // console.log(transformedData);
     setDisplayData(transformedData);
   }, [billingData]);
 

@@ -24,14 +24,25 @@ setInterval(() => {
   collectMetric();
 }, 90000); // 1 minute 30 seconds
 
-// collectBill("202404");
-// collectBill("202405");
-// collectBill("202406");
+const arrayMonth = ["202404", "202405", "202406"];
 
+setInterval(() => {
+  updateNewBill();
+}, 1000 * 60 * 60 * 24); // 1 day
+
+updateNewBill();
 collectMetric();
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
 });
+
+async function updateNewBill() {
+  axios.delete("http://localhost:3000/costs");
+  arrayMonth.forEach((month) => {
+    collectBill(month);
+  });
+}
 
 async function collectMetric() {
   console.log(

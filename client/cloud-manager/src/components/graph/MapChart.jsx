@@ -50,7 +50,7 @@ export default function MapChart(processedData) {
   return (
     <WorldMap
       color="red"
-      title="Instance Distribution"
+      title="Resource Distribution"
       value-suffix="clusters"
       size="responsive"
       strokeOpacity={0.6}

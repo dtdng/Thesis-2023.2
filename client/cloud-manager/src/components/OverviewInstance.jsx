@@ -97,16 +97,16 @@ const OverviewInstance = ({ instance }) => {
       )}
       {data.type === "compute#instance" && (
         <div className="row-direction">
-          <SimpleChart instanceIDList={[data._id]} type={"cpu"} />
-          <SimpleChart instanceIDList={[data._id]} type={"memory"} />
+          <SimpleChart instanceIDList={[data._id]} type={"cpu"} period={1} />
+          <SimpleChart instanceIDList={[data._id]} type={"memory"} period={1} />
         </div>
       )}
       {data.type === "t2.micro" && (
         <div>
           <div className="row-direction">
-            <SimpleChart instanceIDList={[data._id]} type={"cpu"} />
-            <SimpleChart instanceIDList={[data._id]} type={"network_in"} />
-            <SimpleChart instanceIDList={[data._id]} type={"network_out"} />
+            <SimpleChart instanceIDList={[data._id]} type={"cpu"} period={5} />
+            <SimpleChart instanceIDList={[data._id]} type={"network_in"} period={5} />
+            <SimpleChart instanceIDList={[data._id]} type={"network_out"} period={5}/>
           </div>
         </div>
       )}

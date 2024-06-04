@@ -53,4 +53,13 @@ app.patch("/costs/cloudProject/", async (request, response) => {
   }
 });
 
+app.delete("/costs", async (request, response) => {
+  try {
+    await Cost.deleteMany({});
+    response.send("All costs deleted successfully");
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 module.exports = app;

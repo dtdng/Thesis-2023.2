@@ -150,7 +150,7 @@ const Overview = (project) => {
       <OverviewClusterInfo processedData={data} />
       <div className="row-direction visualizeMapStatus">
         <div className="statusChart">
-          <p className="chartHeader">Instance Status</p>
+          <p className="chartHeader">Resource Status</p>
           <div className="">
             <ClusterStatusChar processedData={data} />
           </div>

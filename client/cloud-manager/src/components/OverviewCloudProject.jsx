@@ -108,15 +108,35 @@ const OverviewCloudProject = ({
       </div>
       {cloudProject.provider == "google" && (
         <div className="row-direction">
-          <SimpleChart instanceIDList={listInstancesID} type={"cpu"} />
-          <SimpleChart instanceIDList={listInstancesID} type={"memory"} />
+          <SimpleChart
+            instanceIDList={listInstancesID}
+            type={"cpu"}
+            period={1}
+          />
+          <SimpleChart
+            instanceIDList={listInstancesID}
+            type={"memory"}
+            period={1}
+          />
         </div>
       )}
       {cloudProject.provider == "aws" && (
-        <div className="row-direction">
-          <SimpleChart instanceIDList={listInstancesID} type={"cpu"} />
-          {/* <SimpleChart instanceIDList={listInstancesID} type={"network_in"} />
-          <SimpleChart instanceIDList={listInstancesID} type={"network_out"} /> */}
+        <div className="row-direction flex-wrap">
+          <SimpleChart
+            instanceIDList={listInstancesID}
+            type={"cpu"}
+            period={5}
+          />
+          <SimpleChart
+            instanceIDList={listInstancesID}
+            type={"network_in"}
+            period={5}
+          />
+          <SimpleChart
+            instanceIDList={listInstancesID}
+            type={"network_out"}
+            period={5}
+          />
         </div>
       )}
       <div className="projectListPage m-8 overflow-auto rounded-lg shadow">
