@@ -77,6 +77,10 @@ const SimpleChart = ({ instanceIDList, type }) => {
       if (clustersData.length != 0) {
         const transformedData = transformData(clustersData);
         setData(transformedData);
+        console.log("Data transformed:", transformedData);
+        // const alignedData = aggregateDataByClosestTime(transformedData);
+
+        // console.log("Data aligned:", alignedData);
       }
     } catch (error) {
       console.error("Error fetching data:", error);

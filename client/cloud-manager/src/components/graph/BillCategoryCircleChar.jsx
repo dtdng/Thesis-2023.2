@@ -55,7 +55,7 @@ const BillCategoryCircleChart = ({ billingData }) => {
   return (
     <div className="bg-white p-3 m-3 shadow rounded-md border-gray-900 border">
       <h3 className="text-xl font-bold">Billing Category Overall (%)</h3>
-      <ResponsiveContainer width={350} height={300}>
+      <ResponsiveContainer width={300} height={350}>
         <PieChart width={400} height={400}>
           <Pie
             dataKey="value"

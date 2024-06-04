@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 
@@ -118,7 +118,9 @@ const Billing = () => {
             <tbody>
               {listCloudProject.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.name}</td>
+                  <td className="hover:underline">
+                    <Link to={`/cloudProject/${item._id}`}>{item.name}</Link>
+                  </td>
 
                   {data.billByCloudProject[item.id] != undefined &&
                     data.billByCloudProject[item.id].totalBill != 0 && (

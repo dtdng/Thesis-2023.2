@@ -7,6 +7,7 @@ import "./style.scss";
 import { Link } from "react-router-dom";
 import BillCategoryCircleChart from "./graph/BillCategoryCircleChar";
 import BillCategoryMonthBarChart from "./graph/BillCategoryMonthBarChar";
+import SimpleChart from "./graph/SimpleChart";
 var templateData = {
   id: "123",
   name: "test",
@@ -20,9 +21,17 @@ const OverviewCloudProject = ({
   setMenuChoose,
 }) => {
   const [data, setData] = useState(templateData);
-
+  const [listInstancesID, setListInstancesID] = useState([]);
   useEffect(() => {
     setData(cloudProject);
+    const instanceIDs = listInstances
+      .filter(
+        (instance) =>
+          instance.type === "compute#instance" || instance.type === "t2.micro"
+      )
+      .map((instance) => instance._id);
+
+    setListInstancesID(instanceIDs);
   }, [cloudProject]);
 
   const handleGotoBill = () => {
@@ -91,12 +100,25 @@ const OverviewCloudProject = ({
           </div>
         </div>
       </div>
-      <div className="billingInformation ml-10 max-h-90  mb-4 max-w-100">
+      <div className="billingInformation ml-10 max-h-90  mb-4 ">
         <BillCategoryCircleChart billingData={billing} />
       </div>
-      <div className="billingInformation ml-10 max-h-90  mb-4 max-w-100">
+      <div className="billingInformation ml-10 max-h-90  mb-4 ">
         <BillCategoryMonthBarChart billingData={billing} />
       </div>
+      {cloudProject.provider == "google" && (
+        <div className="row-direction">
+          <SimpleChart instanceIDList={listInstancesID} type={"cpu"} />
+          <SimpleChart instanceIDList={listInstancesID} type={"memory"} />
+        </div>
+      )}
+      {cloudProject.provider == "aws" && (
+        <div className="row-direction">
+          <SimpleChart instanceIDList={listInstancesID} type={"cpu"} />
+          {/* <SimpleChart instanceIDList={listInstancesID} type={"network_in"} />
+          <SimpleChart instanceIDList={listInstancesID} type={"network_out"} /> */}
+        </div>
+      )}
       <div className="projectListPage m-8 overflow-auto rounded-lg shadow">
         <h3 className="text-2xl font-bold ">List Instances</h3>
         <table className="mt-4 w-full" hover size="sm">

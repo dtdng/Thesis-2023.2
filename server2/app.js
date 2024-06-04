@@ -24,9 +24,9 @@ setInterval(() => {
   collectMetric();
 }, 90000); // 1 minute 30 seconds
 
-collectBill("202404");
-collectBill("202405");
-collectBill("202406");
+// collectBill("202404");
+// collectBill("202405");
+// collectBill("202406");
 
 collectMetric();
 app.listen(PORT, () => {

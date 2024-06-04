@@ -43,7 +43,7 @@ const ListInstances = () => {
 
   return (
     <div className="projectListPage overflow-auto rounded-lg shadow">
-      <h3 className="text-2xl font-bold ">List Instances</h3>
+      <h3 className="text-2xl font-bold ">List Resources</h3>
 
       <table className="mt-4 w-full" hover size="sm">
         <thead className="bg-gray-50 border-b-2 border-gray-200">

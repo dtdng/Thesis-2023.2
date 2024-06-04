@@ -20,7 +20,7 @@ const SideBarOption = ({ text, setMenuChoose }) => {
       {text === "Profile" && <img src={profileIcon} alt="profile" />}
       {text === "Setting" && <img src={settingIcon} alt="setting" />}
       {text === "Billing" && <img src={graphIcon} alt="billing" />}
-      {text === "Instances" && <img src={listIcon} alt="instances" />}
+      {text === "Resources" && <img src={listIcon} alt="resources" />}
       {text === "Cloud Projects" && (
         <img src={projectIcon} alt="cloud projects" />
       )}

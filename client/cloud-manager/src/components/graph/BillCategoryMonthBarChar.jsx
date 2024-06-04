@@ -66,12 +66,7 @@ const BillCategoryMonthBarChart = ({ billingData }) => {
   return (
     <div className="projectListPage w-max">
       <h3 className="text-xl font-bold">Billing Category By Month (USD)</h3>
-      <ResponsiveContainer
-        maxWidth={600}
-        minWidth={450}
-        width="70%"
-        height={300}
-      >
+      <ResponsiveContainer width={450} height={300}>
         <BarChart
           width={1000}
           height={300}

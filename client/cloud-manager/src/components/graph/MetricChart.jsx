@@ -57,9 +57,6 @@ const MetricChart = ({ instanceID, type }) => {
         // console.log("Processed Data", processedData);
       } else {
         console.log("No data found");
-        console.log("Instance ID", instanceID);
-        console.log("timeEnd", timeEnd);
-        console.log("timeStart", timeStart);
       }
     } catch (error) {
       console.error("Error fetching data:", error.message || error);
