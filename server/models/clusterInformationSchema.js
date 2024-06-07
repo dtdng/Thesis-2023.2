@@ -38,6 +38,10 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cloudProjectName: {
+    type: String,
+    required: false,
+  },
 });
 
 const ClusterInformation = mongoose.model(

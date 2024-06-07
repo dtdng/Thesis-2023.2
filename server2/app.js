@@ -10,6 +10,7 @@ const googleInstance = require("./query/GoogleInstance.js");
 const awsInstance = require("./aws/instanceAWS.js");
 const awsBill = require("./aws/billingAWS.js");
 const googleBill = require("./bigQuery/queryBill.js");
+// const testing = require("./testing/testInstanceGoogle.js");
 
 const app = express();
 const PORT = 3004;
@@ -66,8 +67,9 @@ async function collectMetric() {
         console.log("Start collecting metric for " + instance.name + "...");
         const cpuMetric = await googleInstance.getInstanceCPUMetricList(
           instance.cloudProjectID,
-          instance.name
+          instance.id
         );
+      
         const memoryMetric = await googleInstance.getInstanceMemoryMetricList(
           instance.cloudProjectID,
           instance.id
@@ -76,7 +78,6 @@ async function collectMetric() {
           if (memoryMetric.value == 0) {
           } else {
             memoryMetric.id = instance._id;
-            // console.log(memoryMetric);
             //push to database + update status to running
             axios.post("http://localhost:3000/metric", memoryMetric);
           }
@@ -174,10 +175,10 @@ async function collectBill(month) {
       const res = await axios.get(
         `http://localhost:3000/cloudProject/project/${project_id}`
       );
-      listCloudProject = listCloudProject.concat(res.data); // Combine all cloud projects
+      listCloudProject = listCloudProject.concat(res.data); // Combine all cloud Applications
     } catch (error) {
       console.error(
-        `Error fetching cloud projects for project ID ${project_id}:`,
+        `Error fetching cloud applications for project ID ${project_id}:`,
         error
       );
     }

@@ -47,7 +47,7 @@ const Billing = () => {
 
       if (cloudProjectResponse.data) {
         setListCloudProject(cloudProjectResponse.data);
-        // console.log("List Cloud Project", cloudProjectResponse.data);
+        // console.log("List Cloud Applications", cloudProjectResponse.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -108,9 +108,9 @@ const Billing = () => {
         <Table className="mt-4" hover size="sm">
           <thead>
             <tr>
-              <th>Cloud Project</th>
+              <th>Cloud Application</th>
               <th>Cost(USD)</th>
-              <th>% Change</th>
+              {/* <th>% Change</th> */}
             </tr>
           </thead>
 
@@ -134,13 +134,13 @@ const Billing = () => {
                           className="noDataNote"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
-                          title="It may be because the project has no cost data or several information is missing. Please check the cloud project dashboard for ensuring."
+                          title="It may be because the project has no cost data or several information is missing. Please check the cloud application dashboard for ensuring."
                         >
                           has no cost data
                         </p>
                       </td>
                     )}
-                  <td>0</td>
+                  {/* <td>0</td> */}
                 </tr>
               ))}
             </tbody>

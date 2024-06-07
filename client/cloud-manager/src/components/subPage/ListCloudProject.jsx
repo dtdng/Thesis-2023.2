@@ -43,7 +43,7 @@ const ListCloudProject = ({ projects }) => {
 
   return (
     <div className="projectListPage overflow-auto rounded-lg shadow">
-      <h3 className="text-2xl font-bold ">List Cloud Projects</h3>
+      <h3 className="text-2xl font-bold ">List Cloud Applications</h3>
       <table className="mt-4 w-full" hover size="sm">
         <thead className="bg-gray-50 border-b-2 border-gray-200">
           <tr>

@@ -50,7 +50,7 @@ const Setting = (data) => {
       <div>
         <div className="projectListPage w-max rounded-sm">
           <h3 className="text-xl font-bold mb-4">
-            Update Cloud Project Information
+            Update Cloud Application Information
           </h3>
           <form onSubmit={handleSubmit} className="w-max">
             <div>

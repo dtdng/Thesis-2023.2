@@ -82,7 +82,7 @@ const getClusterCPUMetricList = async function (project_id, cluster_id) {
 const getClusterMemoryMetricList = async function (project_id, cluster_id) {};
 
 // getClusterInformationInProject("bustling-dynamo-420507");
-getClusterCPUMetricList("bustling-dynamo-420507", 0);
+// getClusterCPUMetricList("bustling-dynamo-420507", 0);
 
 module.exports = {
   getClusterInformationInProject,

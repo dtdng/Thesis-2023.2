@@ -21,8 +21,8 @@ const SideBarOption = ({ text, setMenuChoose }) => {
       {text === "Setting" && <img src={settingIcon} alt="setting" />}
       {text === "Billing" && <img src={graphIcon} alt="billing" />}
       {text === "Resources" && <img src={listIcon} alt="resources" />}
-      {text === "Cloud Projects" && (
-        <img src={projectIcon} alt="cloud projects" />
+      {text === "Cloud Applications" && (
+        <img src={projectIcon} alt="cloud applications" />
       )}
       <p>{text}</p>
     </div>

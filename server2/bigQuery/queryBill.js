@@ -1,14 +1,5 @@
 const { BigQuery } = require("@google-cloud/bigquery");
 
-// // Initialize the BigQuery client
-// const bigquery = new BigQuery({
-//   projectId: "bustling-dynamo-420507",
-//   keyFilename: "D:/bustling-dynamo-420507-7ecd3e2a121a.json",
-// });
-
-// // Define the dataset and table ID
-// const datasetId = "Billing_Dataset";
-// const tableId = "gcp_billing_export_v1_0170AB_1A0C14_B679A1";
 
 async function getBillingDataProjectGoogle(
   month,
@@ -60,7 +51,6 @@ async function getBillingDataProjectGoogle(
     return null;
   }
 }
-
 function getStartAndEndDate(month) {
   // Parse the month parameter
   const year = parseInt(month.slice(0, 4), 10);
@@ -85,16 +75,16 @@ function getStartAndEndDate(month) {
     endDate: formatDate(endDate),
   };
 }
-const main = async () => {
-  const response = await getBillingDataProjectGoogle(
-    "202405",
-    "fir-learning-25dbc.BillingDataset",
-    "graduation-reasearch",
-    "test1"
-  );
+// const main = async () => {
+//   const response = await getBillingDataProjectGoogle(
+//     "202405",
+//     "fir-learning-25dbc.BillingDataset",
+//     "graduation-reasearch",
+//     "test1"
+//   );
 
-  console.log(response);
-};
+//   console.log(response);
+// };
 
 // main();
 

@@ -225,7 +225,7 @@ app.get("/cloudProject/:id", async (request, response) => {
     const result = await CloudProject.findById(id);
     response.status(200).send(result);
   } catch (error) {
-    response.status(404).send("Cloud project not found");
+    response.status(404).send("Cloud Application not found");
   }
 });
 
@@ -236,7 +236,7 @@ app.get("/cloudProject/project/:projectID", async (request, response) => {
     const result = await CloudProject.find({ projectId: projectID });
     response.status(200).send(result);
   } catch (error) {
-    response.status(404).send("Cloud project not found");
+    response.status(404).send("Cloud Application not found");
   }
 });
 
@@ -251,7 +251,7 @@ app.put("/cloudProject/:id", async (request, response) => {
     );
     response.status(200).send(cloudProject);
   } catch (error) {
-    response.status(404).send("Cloud project not found");
+    response.status(404).send("Cloud Application not found");
   }
 });
 

@@ -51,6 +51,7 @@ const ListInstances = () => {
             <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
               Name
             </th>
+
             <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
               Provider
             </th>

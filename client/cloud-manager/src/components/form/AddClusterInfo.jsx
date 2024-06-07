@@ -35,7 +35,9 @@ const AddClusterInfo = (props) => {
         .getElementById("awsApplicationTag")
         .value.toLowerCase();
       if (cloudProjectID == "" || awsApplicationTag == "") {
-        toast.error("Please enter the cloud project ID and application tag");
+        toast.error(
+          "Please enter the cloud application ID and application tag"
+        );
         return;
       }
     }
@@ -71,7 +73,7 @@ const AddClusterInfo = (props) => {
     e.preventDefault();
 
     if (data.length == 0) {
-      toast.error("Please check the cloud project first");
+      toast.error("Please check the cloud application first");
       return;
     }
     try {
@@ -119,6 +121,7 @@ const AddClusterInfo = (props) => {
           status: obj.status,
           type: obj.type,
           selfLink: obj.selfLink,
+          cloudProjectName: obj.cloudProjectID,
         };
         console.log("instance", instance);
         count++;
@@ -145,7 +148,7 @@ const AddClusterInfo = (props) => {
     <div className="overlayer">
       <form onSubmit={handleSubmit} className="">
         <div className="form-header">
-          <p>Cloud Project Information</p>
+          <p>Cloud Application Information</p>
           <button
             type="button"
             className="closeFormBtn"
@@ -163,7 +166,7 @@ const AddClusterInfo = (props) => {
             <div>
               <div className="col-md-7">
                 <label htmlFor="googleProjectID" className="form-label">
-                  Cloud Project
+                  Cloud Application
                 </label>
                 <input
                   type="text"
@@ -295,7 +298,7 @@ const AddClusterInfo = (props) => {
           </button>
 
           <button type="submit" className="btn btn-primary">
-            {loadingAddData == false && "Add This Cloud Project"}
+            {loadingAddData == false && "Add This Cloud Application"}
             <ClipLoader
               loading={loadingAddData}
               size={15}

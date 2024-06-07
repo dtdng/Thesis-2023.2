@@ -1,5 +1,3 @@
-const compute = require("@google-cloud/compute");
-const monitoring = require("@google-cloud/monitoring");
 const axios = require("axios");
 
 function extractZoneInfo(url) {
@@ -13,6 +11,8 @@ function extractZoneInfo(url) {
 
 // List all instances in the specified project.
 async function listAllInstances(cloudProjectId) {
+  const compute = require("@google-cloud/compute");
+  const monitoring = require("@google-cloud/monitoring");
   const instancesClient = new compute.InstancesClient();
 
   //Use the `maxResults` parameter to limit the number of results that the API returns per response page.
@@ -39,10 +39,11 @@ async function listAllInstances(cloudProjectId) {
     }
   }
 }
+
 async function getInstanceCPUMetricList(cloudProjectId, instance_id) {
+  // Creates a client
   const compute = require("@google-cloud/compute");
   const monitoring = require("@google-cloud/monitoring");
-  // Creates a client
   const monitoringClient = new monitoring.MetricServiceClient();
 
   let request = {};
@@ -97,7 +98,7 @@ async function getInstanceCPUMetricList(cloudProjectId, instance_id) {
   };
   try {
     // Writes time series data
-    // console.log(request);
+    console.log(request);
     const [timeSeries] = await monitoringClient.listTimeSeries(request);
     timeSeries.forEach((data) => {
       if (data.metric.labels.instance_name != null) {
@@ -115,6 +116,8 @@ async function getInstanceCPUMetricList(cloudProjectId, instance_id) {
 
 async function getInstanceMemoryMetricList(cloudProjectId, instance_id) {
   // Creates a client
+  const compute = require("@google-cloud/compute");
+  const monitoring = require("@google-cloud/monitoring");
   const monitoringClient = new monitoring.MetricServiceClient();
 
   let request = {};
@@ -125,7 +128,7 @@ async function getInstanceMemoryMetricList(cloudProjectId, instance_id) {
         'metric.type="agent.googleapis.com/memory/percent_used" AND resource.type="gce_instance" AND metric.labels.state="used"',
       interval: {
         startTime: {
-          seconds: Math.floor(Date.now() / 1000) - 60*2, // Limit results to the last 5 minutes
+          seconds: Math.floor(Date.now() / 1000) - 60, // Limit results to the last 5 minutes
         },
         endTime: {
           seconds: Math.floor(Date.now() / 1000),
@@ -141,7 +144,7 @@ async function getInstanceMemoryMetricList(cloudProjectId, instance_id) {
         '"',
       interval: {
         startTime: {
-          seconds: Math.floor(Date.now() / 1000) - 60*2, // Limit results to the last 5 minutes
+          seconds: Math.floor(Date.now() / 1000) - 60, // Limit results to the last 5 minutes
         },
         endTime: {
           seconds: Math.floor(Date.now() / 1000),
@@ -178,6 +181,8 @@ async function getInstanceMemoryMetricList(cloudProjectId, instance_id) {
 }
 
 async function getListProject() {
+  const compute = require("@google-cloud/compute");
+  const monitoring = require("@google-cloud/monitoring");
   var listProjectID = [];
   try {
     const response = await axios.get(`http://localhost:3000/projects`);
@@ -194,6 +199,8 @@ async function getListProject() {
 }
 
 async function getListInstanceInMultiCloudProject(project_id) {
+  const axios = require("axios");
+
   var listInstance = [];
   try {
     const response = await axios.get(
@@ -208,16 +215,20 @@ async function getListInstanceInMultiCloudProject(project_id) {
   return listInstance;
 }
 
-// const main = async () => {
-//   console.log("List all instances in the project:");
-//   const result = await getInstanceCPUMetricList(
-//     "graduation-reasearch",
-//     "6216207772348936593"
-//   );
-//   console.log(result);
-// };
+async function main() {
+  const result1 = await getInstanceCPUMetricList(
+    "graduation-reasearch",
+    "6216207772348936593"
+  );
+  const result2 = await getInstanceMemoryMetricList(
+    "graduation-reasearch",
+    "6216207772348936593"
+  );
+  console.log(result1);
+  console.log(result2);
+}
 
-// main();
+main();
 
 module.exports = {
   listAllInstances,

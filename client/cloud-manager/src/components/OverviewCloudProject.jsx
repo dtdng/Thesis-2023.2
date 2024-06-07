@@ -55,7 +55,7 @@ const OverviewCloudProject = ({
               fill-rule="evenodd"
             ></path>
           </svg>
-          Cloud Project Info
+          Cloud Application Info
         </div>
         <div className="instanceInformationContent">
           <div className="info">

@@ -63,7 +63,7 @@ const ProjectDashboard = () => {
         <div className="midPageContent">
           {menuChoose == "Overview" && <Overview project={project} />}
           {menuChoose == "Resources" && <ListInstances project={project} />}
-          {menuChoose == "Cloud Projects" && (
+          {menuChoose == "Cloud Applications" && (
             <ListCloudProject project={project} />
           )}
           {menuChoose == "Billing" && <Billing project={project} />}
