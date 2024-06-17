@@ -34,6 +34,10 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: true,
   },
+  plan: {
+    type: String,
+    required: false,
+  },
   selfLink: {
     type: String,
     required: true,

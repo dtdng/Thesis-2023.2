@@ -107,3 +107,38 @@ app.delete("/cluster/:id", async (request, response) => {
 });
 
 module.exports = app;
+
+app.get("/cluster/resource/type", async (request, response) => {
+  try {
+    const agg = [
+      {
+        $group: {
+          _id: {
+            type: "$type",
+            plan: "$plan",
+            provider: "$provider",
+            region: "$region",
+          },
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          type: "$_id.type",
+          plan: "$_id.plan",
+          provider: "$_id.provider",
+          region: "$_id.region",
+          count: 1,
+        },
+      },
+    ];
+    const result = await ClusterInformation.aggregate(agg);
+    console.log("result", result);
+    
+    response.json(result);
+  } catch (err) {
+    console.error(err);
+    response.status(500).send("Internal Server Error");
+  }
+});

@@ -16,8 +16,9 @@ const SideBar = ({ setMenuChoose }) => {
           onClick={() => {
             signOut(auth);
           }}
+          className="row-direction"
         >
-          <img src={logout} alt="" srcset="" />
+          <img src={logout} alt="" srcset="" className="m-0" />
           Logout
         </button>
       </div>

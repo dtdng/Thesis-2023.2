@@ -5,6 +5,7 @@ const monitoring = require("@google-cloud/monitoring");
 const CloudProject = require("../models/cloudProjectSchema");
 const { ClusterManagerClient } = require("@google-cloud/container").v1;
 const ClusterInformation = require("../models/clusterInformationSchema");
+const functions = require("../../server2/function.js");
 const {
   CloudWatchClient,
   GetMetricStatisticsCommand,
@@ -22,6 +23,12 @@ function extractZoneInfo(url) {
   const pathParts = urlObj.pathname.split("/").slice(5);
   // Zone information is the second element (index 1)
   return pathParts[1];
+}
+
+function extractMachineType(url) {
+  const urlObj = new URL(url);
+  const pathParts = urlObj.pathname.split("/");
+  return pathParts[pathParts.length - 1];
 }
 
 function extractAWSRegionInfo(availabilityZone) {
@@ -48,6 +55,7 @@ async function listAllGoogleCloudProjectInstances(project_id) {
       const instances = instancesObject.instances;
       if (instances && instances.length > 0) {
         for (const instance of instances) {
+          // console.log(instance);
           const object = {
             name: instance.name,
             id: instance.id,
@@ -55,6 +63,7 @@ async function listAllGoogleCloudProjectInstances(project_id) {
             status: instance.status,
             selfLink: instance.selfLink,
             type: instance.kind,
+            plan: extractMachineType(instance.machineType),
             existed: false,
           };
           instancesList.push(object);
@@ -116,6 +125,7 @@ const listAllAWSInstance = async (tagApplicationValue) => {
     if (data.Reservations.length > 0) {
       data.Reservations.forEach((reservation) => {
         reservation.Instances.forEach((instance) => {
+          console.log(instance);
           let instanceObject = {
             name: instance.Tags.find((tag) => tag.Key === "Name").Value,
             id: instance.InstanceId,
@@ -123,6 +133,7 @@ const listAllAWSInstance = async (tagApplicationValue) => {
             status: instance.State.Name == "running" ? "RUNNING" : "TERMINATED",
             selfLink: instance.InstanceId,
             type: instance.InstanceType,
+            plan: instance.InstanceType, // Not sure what to put here
             existed: false,
           };
           instanceList.push(instanceObject);
@@ -155,8 +166,8 @@ async function checkClusterExistence(result) {
 app.patch("/cloudProject/:provider", async (request, response) => {
   const provider = request.params.provider;
   const { cloudProjectID } = request.body;
-  console.log("Project ID:", cloudProjectID);
-  console.log("Provider:", provider);
+  // console.log("Project ID:", cloudProjectID);
+  // console.log("Provider:", provider);
   if (provider === "google") {
     try {
       const instances =
@@ -203,6 +214,7 @@ app.post("/cloudProject", async (request, response) => {
 
   try {
     const result = await cloudProject.save();
+    functions.updateNewBill();
     response.status(201).send(result);
   } catch (error) {
     response.status(400).send(error);
@@ -250,6 +262,7 @@ app.put("/cloudProject/:id", async (request, response) => {
       { new: true, runValidators: true }
     );
     response.status(200).send(cloudProject);
+    functions.updateNewBill();
   } catch (error) {
     response.status(404).send("Cloud Application not found");
   }

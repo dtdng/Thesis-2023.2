@@ -120,6 +120,7 @@ const AddClusterInfo = (props) => {
           provider: provider,
           status: obj.status,
           type: obj.type,
+          plan: obj.plan || obj.type,
           selfLink: obj.selfLink,
           cloudProjectName: obj.cloudProjectID,
         };

@@ -17,6 +17,7 @@ const SideBarProjectDashboard = ({ project, setMenuChoose }) => {
         <SideBarOption text="Resources" setMenuChoose={setMenuChoose} />
         <SideBarOption text="Cloud Applications" setMenuChoose={setMenuChoose} />
         <SideBarOption text="Billing" setMenuChoose={setMenuChoose} />
+        {/* <SideBarOption text="Reviews" setMenuChoose={setMenuChoose} /> */}
         <SideBarOption text="Setting" setMenuChoose={setMenuChoose} />
       </div>
     </div>

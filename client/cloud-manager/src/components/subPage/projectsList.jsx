@@ -50,7 +50,7 @@ const ProjectsList = () => {
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
         ></CreateProjectForm>
-        <div>
+        <div className="m-0 row-direction">
           <button
             type="button"
             onClick={handleRefreshButton}
@@ -58,7 +58,11 @@ const ProjectsList = () => {
           >
             <img src={refreshIcon} alt="refresh" />
           </button>
-          <button type="button" onClick={handleAddProjectButton}>
+          <button
+            type="button"
+            onClick={handleAddProjectButton}
+            className="row-direction"
+          >
             <img src={addProjectIcon} alt="add project" />
             Add Project
           </button>

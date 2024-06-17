@@ -40,7 +40,7 @@ const OverviewCloudProject = ({
 
   return (
     <div className="instanceOverview">
-      <div className="instanceInformation max-h-90 mb-4">
+      <div className="instanceInformation mb-4">
         <div className="instanceInformationTitle">
           <svg
             width="30px"
@@ -141,7 +141,7 @@ const OverviewCloudProject = ({
       )}
       <div className="projectListPage m-8 overflow-auto rounded-lg shadow">
         <h3 className="text-2xl font-bold ">List Instances</h3>
-        <table className="mt-4 w-full" hover size="sm">
+        <table className="mt-4 w-full " hover size="sm">
           <thead className="bg-gray-50 border-b-2 border-gray-200">
             <tr>
               <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">

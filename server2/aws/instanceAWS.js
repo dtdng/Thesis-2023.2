@@ -9,10 +9,11 @@ const {
 const { EC2Client, DescribeInstancesCommand } = require("@aws-sdk/client-ec2");
 
 const REGION = "ap-southeast-2"; // Replace with your AWS region
-const INSTANCE_ID = "i-0aa4249a0b2bee44c"; // Replace with your instance ID
+// const INSTANCE_ID = "i-0aa4249a0b2bee44c"; // Replace with your instance ID
 
 const cloudwatchClient = new CloudWatchClient({ region: REGION });
 const ec2Client = new EC2Client({ region: REGION });
+// const rdsClient = new RDSClient({ region: REGION });
 
 function convertToTimestamp(dateString) {
   const date = new Date(dateString); // Parse the ISO 8601 date string

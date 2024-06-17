@@ -16,6 +16,7 @@ import { useAuth } from "./contexts/authContext";
 import ProjectDashboard from "./pages/ProjectDashboard";
 import InstanceDashboard from "./pages/InstanceDashboard";
 import CloudProjectDashboard from "./pages/CloudProjectDashboard";
+import RatingPage from "./pages/RatingPage";
 function App() {
   const { currentUser } = useAuth();
   const ProtectedRoute = ({ children }) => {
@@ -36,7 +37,7 @@ function App() {
     <BrowserRouter>
       <ToastContainer />
       <Routes>
-        <Route exact path="/graph" element={<Graph />} />
+        {/* <Route exact path="/graph" element={<Graph />} /> */}
         <Route
           exact
           path="/"
@@ -48,7 +49,7 @@ function App() {
         />
         <Route
           exact
-          path="instance/:instanceId"
+          path="/instance/:instanceId"
           element={
             <ProtectedRoute>
               <InstanceDashboard />
@@ -56,8 +57,16 @@ function App() {
           }
         />
         <Route
+          path="/review"
+          element={
+            // <ProtectedRoute>
+              <RatingPage />
+            // </ProtectedRoute>
+          }
+        />
+        <Route
           exact
-          path="project/:projectId"
+          path="/project/:projectId"
           element={
             <ProtectedRoute>
               <ProjectDashboard />

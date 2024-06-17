@@ -11,6 +11,7 @@ const ClusterInformationRoute = require("./routes/clusterInformationRoute.js");
 const cloudProjectRoute = require("./routes/cloudProjectRoute.js");
 const metricRoute = require("./routes/metricRoute.js");
 const costRoute = require("./routes/costRoute.js");
+const ratingRoute = require("./routes/ratingRoute.js");
 
 const app = express();
 const PORT = 3000;
@@ -27,6 +28,7 @@ app.use(ClusterInformationRoute);
 app.use(cloudProjectRoute);
 app.use(metricRoute);
 app.use(costRoute);
+app.use(ratingRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);

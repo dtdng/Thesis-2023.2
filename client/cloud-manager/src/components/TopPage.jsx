@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import logo from "../assets/platform_logo.png";
-import searchIcon from "../assets/icons_search.png";
+import searchIcon from "../assets/search.svg";
 import avatar from "../assets/sample_avatar.png";
 import notiIcon from "../assets/noti_icon.png";
 import nonNotiIcon from "../assets/non_noti_icon.png";
@@ -24,10 +24,10 @@ const TopPage = () => {
   return (
     <div className="topPage">
       <Link to="/">
-      <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" />
       </Link>
       <div className="searchBar">
-        <img src={searchIcon} alt="search" />
+        <img src={searchIcon} alt="" className="mr-2" />
         <input type="text" placeholder="Search..." />
       </div>
       <div className="groupUserNoti">
@@ -54,6 +54,7 @@ const TopPage = () => {
             src={notification ? notiIcon : nonNotiIcon}
             alt="notification"
             onClick={() => setNotification(false)}
+            className="scale-150"
           />
         </div>
       </div>
