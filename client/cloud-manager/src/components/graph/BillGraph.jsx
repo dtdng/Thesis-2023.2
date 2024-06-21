@@ -82,14 +82,13 @@ const transformData = (billOverview, cloudList) => {
   }
   // Initialize the template data with the required months
   const months = [
-    "11-2023",
-    "12-2023",
     "01-2024",
     "02-2024",
     "03-2024",
     "04-2024",
     "05-2024",
     "06-2024",
+    "07-2024",
   ];
   let data = months.map((month) => {
     let entry = { month };

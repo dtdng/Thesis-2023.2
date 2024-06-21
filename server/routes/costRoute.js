@@ -1,5 +1,8 @@
 const express = require("express");
+
+const MongoClient = require("mongodb").MongoClient;
 const Cost = require("../models/costSchema");
+
 const app = express();
 
 app.post("/cost", async (request, response) => {
@@ -62,4 +65,53 @@ app.delete("/costs", async (request, response) => {
   }
 });
 
+app.get("/costs/total/:projectID", async (request, response) => {
+  const agg = [
+    {
+      $match: {
+        currency: "VND",
+      },
+    },
+    {
+      $addFields: {
+        costInUSD: {
+          $convert: {
+            input: "$cost",
+            to: "double",
+            onError: 0,
+            onNull: 0,
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        costInUSD: {
+          $divide: ["$costInUSD", 24000],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$cloudProjectID",
+        totalCostUSD: {
+          $sum: "$costInUSD",
+        },
+      },
+    },
+  ];
+
+  try {
+    const client = await MongoClient.connect(
+      "mongodb+srv://dangdatcao2002:datpro2812@cluster0.yxpvmbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    );
+    const coll = client.db("test").collection("costs");
+    const cursor = coll.aggregate(agg);
+    const result = await cursor.toArray();
+    await client.close();
+    response.status(200).send(result);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
 module.exports = app;

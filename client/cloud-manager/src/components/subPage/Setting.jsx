@@ -6,8 +6,9 @@ import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 // import { UserContext } from "../../context/UserContext";
-
+import addProjectIcon from "../../assets/add-project.svg";
 import "../style.scss";
+import AddMemberForm from "../form/AddMemberForm";
 
 const Setting = (data) => {
   const type = data.type;
@@ -195,45 +196,91 @@ const Setting = (data) => {
       projectMembers: project.projectMembers,
     });
 
-    // Handle input change
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+    const [buttonPopup, setButtonPopup] = useState(false);
+
+    const handleOpenAddMemForm = () => {
+      setButtonPopup(true);
     };
 
-    // Handle form submission
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      // try {
-      //   await axios.put(
-      //     `http://localhost:3000/cloudProject/${cloudProject._id}`,
-      //     formData
-      //   );
-      //   toast.success("Project updated successfully.");
-      // } catch (error) {
-      //   console.error("Error updating project:", error);
-      //   toast.error("Error updating project.");
-      // }
-    };
     return (
-      <div className="projectListPage w-max rounded-sm">
-        <div>
-          <h3 className="text-lg font-bold">Project Name</h3>
-          <p className="mb-2 p-1 min-w-10 w-max">{formData.projectName}</p>
+      <div className="m-0 row-direction justify-start align-top flex-wrap">
+        <AddMemberForm
+          trigger={buttonPopup}
+          setTrigger={setButtonPopup}
+          project={project}
+        />
+        <div className="projectListPage w-max rounded-sm m-3">
+          <div>
+            <h3 className="text-lg font-bold">Project Name</h3>
+            <p className="mb-2 p-1 min-w-10 w-max">{formData.projectName}</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold">Project ID</h3>
+            <p className="mb-2 p-1 min-w-10 w-max">{formData.id}</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold">Description</h3>
+            <p className="mb-2 p-1 min-w-10 w-max">
+              {formData.projectDescription}
+            </p>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold">Status</h3>
+            <p className="mb-2 p-1 min-w-10 w-max">{formData.projectStatus}</p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-lg font-bold">Project ID</h3>
-          <p className="mb-2 p-1 min-w-10 w-max">{formData.id}</p>
-        </div>
-        <div>
-          <h3 className="text-lg font-bold">Description</h3>
-          <p className="mb-2 p-1 min-w-10 w-max">
-            {formData.projectDescription}
-          </p>
-        </div>
-        <div>
-          <h3 className="text-lg font-bold">Status</h3>
-          <p className="mb-2 p-1 min-w-10 w-max">{formData.projectStatus}</p>
+        <div className="projectListPage w-max rounded-sm m-3">
+          <div className="row-direction justify-between">
+            <h5 className="text-xl font-semibold">List of member</h5>
+            <button
+              type="button"
+              onClick={handleOpenAddMemForm}
+              className="row-direction hover:bg-blue-100 hover:shadow p-2 rounded-lg"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                viewBox="0 0 24 24"
+                className="scale-150 mr-3"
+              >
+                <path
+                  fill="black"
+                  d="M19 17v2H7v-2s0-4 6-4s6 4 6 4m-3-9a3 3 0 1 0-3 3a3 3 0 0 0 3-3m3.2 5.06A5.6 5.6 0 0 1 21 17v2h3v-2s0-3.45-4.8-3.94M18 5a2.9 2.9 0 0 0-.89.14a5 5 0 0 1 0 5.72A2.9 2.9 0 0 0 18 11a3 3 0 0 0 0-6M8 10H5V7H3v3H0v2h3v3h2v-3h3Z"
+                />
+              </svg>
+            </button>
+          </div>
+          <table className="mt-4 w-full " hover size="sm">
+            <thead className="bg-gray-50 border-b-2 border-gray-200">
+              <tr>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  ID
+                </th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Email
+                </th>
+                <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                  Role
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.project.projectMembers.map((instance) => (
+                <tr key={instance._id} className="hover:bg-slate-100">
+                  <td className="pl-3 text-gray-700 whitespace-nowrap">
+                    {instance.uid}
+                  </td>
+                  <td className="pl-3 text-gray-700 whitespace-nowrap">
+                    {instance.email}
+                  </td>
+                  <td className="pl-3 text-gray-700 whitespace-nowrap">
+                    {instance.role}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     );
@@ -247,19 +294,3 @@ const Setting = (data) => {
 };
 
 export default Setting;
-
-// const convertTime = (timestamp) => {
-//   const date = new Date(timestamp * 1000);
-
-//   // Format the date as YYYY-MM-DD HH:mm:ss
-//   const year = date.getFullYear();
-//   const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based in JavaScript
-//   const day = String(date.getDate()).padStart(2, "0");
-//   const hours = String(date.getHours()).padStart(2, "0");
-//   const minutes = String(date.getMinutes()).padStart(2, "0");
-//   const seconds = String(date.getSeconds()).padStart(2, "0");
-
-//   const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-//   return formattedDate;
-// };

@@ -72,8 +72,7 @@ const ProjectDashboard = () => {
             <Setting type="project" project={project} />
           )}
           {menuChoose == "Reviews" && <Reviews project={project} />}
-          {menuChoose == "Setting" && <Setting type="project" project={project} />}
-
+          {/* {menuChoose == "Setting" && <Setting type="project" project={project} />} */}
         </div>
       </div>
     </div>

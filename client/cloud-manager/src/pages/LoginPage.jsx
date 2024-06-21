@@ -65,20 +65,25 @@ const LoginPage = () => {
                   className="form-check-input"
                   id="formCheck"
                 ></input>
-                <label for="formCheck" className="form-check-label text-secondary">
+                <label
+                  for="formCheck"
+                  className="form-check-label text-secondary"
+                >
                   <small>Remember Me</small>
                 </label>
               </div>
               <div className="forgot">
                 <small>
-                  <a href="#">Forgot Password?</a>
+                  <a href="#" className="hover:underline text-blue-600">
+                    Forgot Password?
+                  </a>
                 </small>
               </div>
             </div>
             <div className="input-group mb-3">
               <button
                 className="btn btn-lg btn-primary w-100 fs-6"
-                type = "submit"
+                type="submit"
               >
                 Login
               </button>
@@ -88,7 +93,10 @@ const LoginPage = () => {
                 </div> */}
             <div className="row">
               <small>
-                Don't have account? <Link to="/register">Sign Up</Link>
+                Don't have account?{" "}
+                <Link to="/register" className="hover:underline text-blue-600">
+                  Sign Up
+                </Link>
               </small>
             </div>
           </form>

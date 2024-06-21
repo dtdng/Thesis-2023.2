@@ -20,12 +20,16 @@ setInterval(() => {
   functions.collectMetric();
 }, 90000); // 1 minute 30 seconds
 
-
-
 setInterval(() => {
   functions.updateNewBill();
 }, 1000 * 60 * 60 * 24); // 1 day
 
+setInterval(() => {
+  functions.checkOverBudget();
+}, 1000 * 60 * 10); // 10 minutes
+
+// functions.checkOverBudget();
+//check on START
 functions.updateNewBill();
 functions.collectMetric();
 

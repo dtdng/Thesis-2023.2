@@ -5,6 +5,7 @@ const awsInstance = require("./aws/instanceAWS.js");
 const awsBill = require("./aws/billingAWS.js");
 const googleBill = require("./bigQuery/queryBill.js");
 // const testing = require("./testing/testInstanceGoogle.js");
+const email = require("./email.js");
 
 const arrayMonth = ["202404", "202405", "202406"];
 
@@ -217,8 +218,37 @@ async function collectBill(month) {
   console.log("Finish collecting bill...");
 }
 
+async function checkOverBudget() {
+  const projectList = await axios.get("http://localhost:3000/projects");
+
+  projectList.data.forEach(async (project) => {
+    const costList = await axios.get(
+      `http://localhost:3000/costs/total/${project._id}`
+    );
+    const budget = project.budgetLimit;
+    var currentCost = 0;
+    costList.data.forEach((cost) => {
+      currentCost += cost.totalCostUSD;
+    });
+    console.log("current cost", currentCost);
+    if (currentCost > (budget * 90) / 100) {
+      project.projectMembers.forEach((member) => {
+        email.sendAlertBudgetEmail(
+          member.email,
+          budget,
+          costList.data,
+          currentCost,
+          project.projectName,
+          project._id
+        );
+      });
+    }
+  });
+}
+
 module.exports = {
   updateNewBill,
   collectMetric,
   collectBill,
+  checkOverBudget,
 };

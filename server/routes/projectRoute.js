@@ -45,10 +45,30 @@ app.get("/project/user/:userID", async (request, response) => {
 });
 
 app.patch("/project/:id", async (request, response) => {
+  console.log("request.body: ", request.body);
+
   try {
-    await projectSchema.findByIdAndUpdate(request.params.id, request.body);
-    await projectSchema.save();
+    console.log(
+      await projectSchema.findByIdAndUpdate(request.params.id, request.body)
+    );
+    console.log(await projectSchema.save());
+
     // response.send(project);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+app.put("/project/:id", async (request, response) => {
+  try {
+    console.log("request.body: ", request.body);
+    const project = await projectSchema.findByIdAndUpdate(
+      request.params.id,
+      request.body,
+      { new: true }
+    );
+    await project.save();
+    response.send(project);
   } catch (error) {
     response.status(500).send(error);
   }

@@ -136,7 +136,10 @@ const SignUpPage = () => {
             </div>
             <div class="row">
               <small>
-                Already have an account? <Link to="/login">Login</Link>
+                Already have an account?{" "}
+                <Link to="/login " className="hover:underline text-blue-600">
+                  Login
+                </Link>
               </small>
             </div>
           </form>

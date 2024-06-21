@@ -15,11 +15,12 @@ const CreateProjectForm = (props) => {
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [err, setErr] = useState(false);
   const [confirm, setConfirm] = useState(false);
-
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const { currentUserData } = useAuth();
 
   const handleSearch = async () => {
     try {
+      setLoadingSearch(true);
       const userDataResponse = await axios.get(
         "http://localhost:3000/account/" + userEmail
       );
@@ -29,8 +30,10 @@ const CreateProjectForm = (props) => {
       // console.log(currentUserData);
       if (userData && userData._id != currentUserData._id) setUser(userData);
       setErr(!userData);
+      setLoadingSearch(false);
     } catch (error) {
       console.error("Error fetching user data:", error);
+      setLoadingSearch(false);
       setErr(true);
     }
   };
@@ -145,6 +148,7 @@ const CreateProjectForm = (props) => {
             ></input>
           </div>
           {err && <span className="error">User not found!</span>}
+          {loadingSearch && <ClipLoader size={20} color="#000" />}
           {user && (
             <div className="searchUserChat" onClick={handleSelect}>
               <div className="searchUserChatInfo">
