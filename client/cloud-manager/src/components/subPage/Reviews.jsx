@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import RatingForm from "../form/RatingForm";
 
 const Reviews = ({ project }) => {
   const [instances, setInstances] = useState([]);
   const [loading, setLoading] = useState(true);
   const [review, setReview] = useState([]);
+  const [selectedInstance, setSelectedInstance] = useState(null);
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -20,6 +22,11 @@ const Reviews = ({ project }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const openReviewForm = (instance) => {
+    setSelectedInstance(instance);
+    setButtonPopup(true);
   };
 
   useEffect(() => {
@@ -38,6 +45,11 @@ const Reviews = ({ project }) => {
 
   return (
     <div>
+      <RatingForm
+        trigger={buttonPopup}
+        setTrigger={setButtonPopup}
+        selectedInstance={selectedInstance}
+      />
       <div className="projectListPage w-max rounded-sm ">
         <h3 className="text-2xl font-bold ">Type of Instances</h3>
         <table className="mt-4 w-full " striped hover size="sm">
@@ -57,6 +69,9 @@ const Reviews = ({ project }) => {
               </th>
               <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
                 Count
+              </th>
+              <th className="p-3 font-semibold tracking-wide text-left whitespace-nowrap">
+                Review
               </th>
             </tr>
           </thead>
@@ -79,12 +94,22 @@ const Reviews = ({ project }) => {
                   <td className="pl-3 whitespace-nowrap row-direction">
                     {instance.count}
                   </td>
+                  <td className="pl-3 text-gray-700 whitespace-nowrap">
+                    <button
+                      className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-2 mb-2"
+                      onClick={() => {
+                        openReviewForm(instance);
+                      }}
+                    >
+                      Review
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
-      <div className="projectListPage w-max rounded-sm mt-8 mb-8">
+      {/* <div className="projectListPage w-max rounded-sm mt-8 mb-8">
         <h3 className="text-2xl font-bold ">Rating List</h3>
         <div>Search Bar</div>
         <table className="mt-4 w-full" hover striped size="sm">
@@ -108,7 +133,7 @@ const Reviews = ({ project }) => {
             </tr>
           </thead>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };

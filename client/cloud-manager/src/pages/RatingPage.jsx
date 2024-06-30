@@ -242,15 +242,38 @@ const RatingPage = () => {
                     </td>
                     <td className="p-3 py-2">{rating.region}</td>
                     <td className="p-3 py-2">{rating.country}</td>
-                    <td className="p-3 py-2">
-                      {Object.entries(rating.criteria_ratings).map(
-                        ([key, value]) => (
-                          <div key={key}>
-                            <strong>{key}:</strong> {value}
-                          </div>
-                        )
-                      )}
-                    </td>
+                    {rating.page_url !== "" ? (
+                      <td className="p-3 py-2">
+                        {Object.entries(rating.criteria_ratings).map(
+                          ([key, value]) => (
+                            <div key={key}>
+                              <strong>{key}:</strong> {value}
+                            </div>
+                          )
+                        )}
+                      </td>
+                    ) : (
+                      <td className="p-3 py-2">
+                        {Object.entries(rating.criteria_ratings).map(
+                          ([key, value]) => (
+                            <div key={key}>
+                              <ul>
+                                {Object.entries(value).map(
+                                  ([subKey, subValue]) => (
+                                    <li key={subKey}>
+                                      <strong>
+                                        {key}.{subKey}: {subValue}
+                                      </strong>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            </div>
+                          )
+                        )}
+                      </td>
+                    )}
+
                     <td className="p-3 py-2">
                       <a
                         href={rating.page_url || rating.review_url}

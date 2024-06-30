@@ -200,6 +200,7 @@ const AddClusterInfo = (props) => {
                   className="form-control"
                   id="awsProjectID"
                   placeholder="application-1234"
+              
                 />
               </div>
               <div className="col-md-7">

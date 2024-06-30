@@ -171,6 +171,12 @@ const Overview = (project) => {
 export default Overview;
 
 const nameMapping = {
+  "europe-west4": "NL",
+  "europe-west6": "CH",
+  "europe-west8": "IT",
+  "europe-west9": "FR",
+  "me-central1": "QA",
+  "me-central2": "SA",
   "northamerica-northeast1": "us",
   "northamerica-northeast2": "us",
   "southamerica-east1": "us",
@@ -195,12 +201,7 @@ const nameMapping = {
   "europe-west12": "IT",
   "europe-west2": "GB",
   "europe-west3": "DE",
-  "europe-west4": "NL",
-  "europe-west6": "CH",
-  "europe-west8": "IT",
-  "europe-west9": "FR",
-  "me-central1": "QA",
-  "me-central2": "SA",
+
   "me-west1": "IL",
   "asia-east1": "TW",
   "asia-east2": "CN",
