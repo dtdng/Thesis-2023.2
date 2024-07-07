@@ -5,7 +5,7 @@ import "../style.scss";
 import { useAuth } from "../../contexts/authContext/index";
 import searchIcon from "../../assets/icons_search.png";
 import removeIcon from "../../assets/remove.svg";
-
+import { ClipLoader } from "react-spinners";
 import axios from "axios";
 import { toast } from "react-toastify";
 

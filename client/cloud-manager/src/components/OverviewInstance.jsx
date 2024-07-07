@@ -25,8 +25,8 @@ const OverviewInstance = ({ instance }) => {
 
   return (
     <div className="instanceOverview">
-      <div className="instanceInformation">
-        <div className="instanceInformationTitle">
+      <div className="instanceInformation ">
+        <div className="instanceInformationTitle row-direction">
           <svg
             width="30px"
             height="30px"
@@ -42,7 +42,7 @@ const OverviewInstance = ({ instance }) => {
           </svg>
           Instance info
         </div>
-        <div className="instanceInformationContent">
+        <div className="instanceInformationContent pb-0">
           <div className="info">
             <div className="infoTitle">Name</div>
             <div className="infoContent">{data.name}</div>
@@ -56,7 +56,7 @@ const OverviewInstance = ({ instance }) => {
             <div className="infoContent">{data.type}</div>
           </div>
         </div>
-        <div className="instanceInformationContent">
+        <div className="instanceInformationContent pt-0">
           <div className="info">
             <div className="infoTitle">Status</div>
             <div className="infoContent">{data.status}</div>
@@ -105,8 +105,16 @@ const OverviewInstance = ({ instance }) => {
         <div>
           <div className="row-direction">
             <SimpleChart instanceIDList={[data._id]} type={"cpu"} period={5} />
-            <SimpleChart instanceIDList={[data._id]} type={"network_in"} period={5} />
-            <SimpleChart instanceIDList={[data._id]} type={"network_out"} period={5}/>
+            <SimpleChart
+              instanceIDList={[data._id]}
+              type={"network_in"}
+              period={5}
+            />
+            <SimpleChart
+              instanceIDList={[data._id]}
+              type={"network_out"}
+              period={5}
+            />
           </div>
         </div>
       )}

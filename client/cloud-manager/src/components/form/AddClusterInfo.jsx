@@ -134,7 +134,7 @@ const AddClusterInfo = (props) => {
       await Promise.all(promises);
 
       // If all requests are successful, show success message
-      toast.success(`${count} clusters added successfully`);
+      toast.success(`${count} resources added successfully`);
       setLoadingAddData(false);
       props.setTrigger(false);
       setData([]);
@@ -200,7 +200,6 @@ const AddClusterInfo = (props) => {
                   className="form-control"
                   id="awsProjectID"
                   placeholder="application-1234"
-              
                 />
               </div>
               <div className="col-md-7">

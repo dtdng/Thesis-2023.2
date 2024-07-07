@@ -1,9 +1,9 @@
 const axios = require("axios");
 
-const googleInstance = require("./query/GoogleInstance.js");
+const googleInstance = require("./google/GoogleInstance.js");
 const awsInstance = require("./aws/instanceAWS.js");
 const awsBill = require("./aws/billingAWS.js");
-const googleBill = require("./bigQuery/queryBill.js");
+const googleBill = require("./google/queryBill.js");
 // const testing = require("./testing/testInstanceGoogle.js");
 const email = require("./email.js");
 
