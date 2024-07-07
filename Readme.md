@@ -101,6 +101,19 @@ To run this project, you will need to add the following environment variables to
 - **Cost Optimization**: Monitor the cost of cloud services with detailed analysis and create a threshold alert for billing.
 - **Recommendation**: Suggest the suitable cloud service provider based on region, service, provider.
 
+## Screenshots
+
+![Main Project Dashboard](./screenshot/MainProjectDashboard.jpeg)
+
+![Billing Page](./screenshot/OverviewBilling.jpeg)
+
+![Cloud Application Dashboard](./screenshot/CloudAppDashboard.jpeg)
+
+![Resource Page](./screenshot/ResourcePage.jpeg)
+
+![Recommendation Page](./screenshot/ReviewPage.png)
+
+
 ## Technologies Used
 
 - MongoDB
@@ -114,18 +127,6 @@ To run this project, you will need to add the following environment variables to
 ## Documentation
 
 [Documentation](https://storage.googleapis.com/hust-files/2024-07-02/5778168805851136/20205177_caodangdat-2023.2_3.7m.pdf)
-
-## Screenshots
-
-![Main Project Dashboard](./screenshot/MainProjectDashboard.jpeg)
-
-![Billing Page](./screenshot/OverviewBilling.jpeg)
-
-![Cloud Application Dashboard](./screenshot/CloudAppDashboard.jpeg)
-
-![Resource Page](./screenshot/ResourcePage.jpeg)
-
-![Recommendation Page](./screenshot/ReviewPage.png)
 
 ## Authors
 
