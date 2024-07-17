@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import BillCategoryCircleChart from "./graph/BillCategoryCircleChar";
 import BillCategoryMonthBarChart from "./graph/BillCategoryMonthBarChar";
 import SimpleChart from "./graph/SimpleChart";
+import ApplicationBudget from "./form/ApplicationBudget";
 var templateData = {
   id: "123",
   name: "test",
@@ -106,6 +107,11 @@ const OverviewCloudProject = ({
       <div className="billingInformation ml-10 max-h-90  mb-4 ">
         <BillCategoryMonthBarChart billingData={billing} />
       </div>
+
+      <div className="m-4 bg-white p-4 min-w-56 rounded-md border-gray-950 border-solid border">
+        <ApplicationBudget cloudProject={cloudProject} />
+      </div>
+
       {cloudProject.provider == "google" && (
         <div className="row-direction">
           <SimpleChart

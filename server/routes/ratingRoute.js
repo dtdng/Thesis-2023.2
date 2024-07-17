@@ -35,6 +35,28 @@ app.post("/rating", async (req, res) => {
   await client.close();
 });
 
+app.get("/rating/:region/:provider/:product", async (req, res) => {
+  var { region, provider, product } = req.params;
+  //convert Kubernetes%20Engine => Kubernetes Engine
+  product = product.replace(/%20/g, " ");
+  console.log(product, region, provider);
+
+  const filter = {
+    cloud_provider: provider,
+    product: product,
+    region: region,
+  };
+  const projection = {};
+  const client = await MongoClient.connect(
+    "mongodb+srv://dangdatcao2002:datpro2812@cluster0.yxpvmbt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  );
+  const coll = client.db("data").collection("reviewCollection");
+  const cursor = coll.find(filter, { projection });
+  const result = await cursor.toArray();
+  res.send(result);
+  await client.close();
+});
+
 app.get("/rating/overview", async (req, res) => {
   const agg = [
     {
@@ -43,10 +65,24 @@ app.get("/rating/overview", async (req, res) => {
           product: "$product",
           region: "$region",
           cloud_provider: "$cloud_provider",
+          overall_rating: "$overall_rating",
         },
-        average_rating: {
-          $avg: {
-            $toDouble: "$overall_rating",
+        count: {
+          $sum: 1,
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          product: "$_id.product",
+          region: "$_id.region",
+          cloud_provider: "$_id.cloud_provider",
+        },
+        ratings: {
+          $push: {
+            rating: "$_id.overall_rating",
+            count: "$count",
           },
         },
       },

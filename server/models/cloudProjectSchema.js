@@ -30,6 +30,10 @@ const cloudProject = new mongoose.Schema({
     type: String,
     required: false,
   },
+  budget: {
+    type: Array,
+    required: false,
+  },
 });
 
 const CloudProject = mongoose.model("CLOUDPROJECT", cloudProject);

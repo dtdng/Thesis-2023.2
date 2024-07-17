@@ -17,6 +17,9 @@ import ProjectDashboard from "./pages/ProjectDashboard";
 import InstanceDashboard from "./pages/InstanceDashboard";
 import CloudProjectDashboard from "./pages/CloudProjectDashboard";
 import RatingPage from "./pages/RatingPage";
+import Overview from "./components/subPage/Overview";
+import OverviewRatingPage from "./pages/OverviewRatingPage";
+import DetailRatingPage from "./pages/DetailRatingPage";
 function App() {
   const { currentUser } = useAuth();
   const ProtectedRoute = ({ children }) => {
@@ -56,13 +59,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/review" element={<OverviewRatingPage />} />
         <Route
-          path="/review"
-          element={
-            // <ProtectedRoute>
-              <RatingPage />
-            // </ProtectedRoute>
-          }
+          path="/detailReview/:provider/:region/:product"
+          element={<DetailRatingPage />}
         />
         <Route
           exact

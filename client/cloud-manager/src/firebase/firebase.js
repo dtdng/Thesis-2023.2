@@ -3,7 +3,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDShO7pYsUCCmJPSrGhG5k9TRX_jb0QcEM",
+  apiKey: "AIzaSyCN76raikk2zvhUY_MIPTgDqfDBsbmlL84",
   authDomain: "bustling-dynamo-420507.firebaseapp.com",
   projectId: "bustling-dynamo-420507",
   storageBucket: "bustling-dynamo-420507.appspot.com",

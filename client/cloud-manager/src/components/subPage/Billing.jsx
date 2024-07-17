@@ -21,7 +21,7 @@ const Billing = () => {
   const [loadingProcessData, setLoadingProcessData] = useState(true);
 
   const [updateBudget, setUpdateBudget] = useState(false);
-
+  const [projectBudgetList, setProjectBudgetList] = useState([]);
   const tempData = [
     {
       totalBill: 0,
@@ -51,7 +51,6 @@ const Billing = () => {
 
       if (cloudProjectResponse.data) {
         setListCloudProject(cloudProjectResponse.data);
-        // console.log("List Cloud Applications", cloudProjectResponse.data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -87,9 +86,23 @@ const Billing = () => {
       const processedData = processBills(listBill, listCloudProject);
       setLoadingProcessData(false);
       setData(processedData);
-      // console.log("Processed Data", processedData);
     }
   }, [listBill, listCloudProject]);
+
+  //const [projectBudgetList, setProjectBudgetList] = useState([]);
+  useEffect(() => {
+    //console.log("list cloud project:", listCloudProject);
+    const updatedProjectBudgetList = listCloudProject.map((project) => {
+      const totalBudget = project.budget.reduce((sum, item) => {
+        const value = Object.values(item)[0]; // Get the budget value
+        return sum + value;
+      }, 0);
+
+      return { ...project, totalBudget };
+    });
+    setProjectBudgetList(updatedProjectBudgetList);
+    console.log("projectBudgetList:", projectBudgetList);
+  }, [listCloudProject]);
 
   if (loading)
     return (
@@ -177,6 +190,7 @@ const Billing = () => {
             <tr>
               <th>Cloud Application</th>
               <th>Cost(USD)</th>
+              <th>Budget (USD)</th>
             </tr>
           </thead>
 
@@ -206,7 +220,20 @@ const Billing = () => {
                         </p>
                       </td>
                     )}
-                  {/* <td>0</td> */}
+                  <td>
+                    {projectBudgetList[index] != null &&
+                      projectBudgetList[index].totalBudget != 0 &&
+                      projectBudgetList[index].totalBudget}
+                    {projectBudgetList[index] != null &&
+                      projectBudgetList[index].totalBudget == 0 && (
+                        <p
+                          className="noDataNote"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="It may be because the project has no cost data or several information is missing. Please check the cloud application dashboard for ensuring."
+                        ></p>
+                      )}
+                  </td>
                 </tr>
               ))}
             </tbody>

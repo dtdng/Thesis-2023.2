@@ -91,6 +91,7 @@ const AddClusterInfo = (props) => {
           provider: provider,
           billingTableId: billingTableId,
           billingAccount: "",
+          budget: [],
         };
         axios.post("http://localhost:3000/cloudProject", cloudProject);
       } else if (provider === "aws") {
@@ -102,6 +103,7 @@ const AddClusterInfo = (props) => {
           id: tag,
           provider: provider,
           tag: tag,
+          budget: [],
         };
         axios.post("http://localhost:3000/cloudProject", cloudProject);
       }

@@ -46,6 +46,7 @@ const clusterInformation = new mongoose.Schema({
     type: String,
     required: false,
   },
+  
 });
 
 const ClusterInformation = mongoose.model(

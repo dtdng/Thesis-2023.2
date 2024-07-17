@@ -18,15 +18,14 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 setInterval(() => {
   functions.collectMetric();
-}, 90000); // 1 minute 30 seconds
-
+}, 60000); // 1 minute
 setInterval(() => {
   functions.updateNewBill();
 }, 1000 * 60 * 60 * 24); // 1 day
 
 setInterval(() => {
   functions.checkOverBudget();
-}, 1000 * 60 * 10); // 10 minutes
+}, 1000 * 60 * 30); // 30 minutes
 
 // functions.checkOverBudget();
 //check on START
